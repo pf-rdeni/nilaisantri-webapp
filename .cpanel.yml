@@ -1,19 +1,7 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/u1525344/nilaisantri/app/
-
-    - hook: post_deploy
-      commands:
-        # Sync Models
-        - /bin/cp -rv app/Models/* ${DEPLOYPATH}Models/
-
-        # Sync Views
-        - /bin/cp -rv app/Views/* ${DEPLOYPATH}Views/
-
-        # Sync Controllers
-        - /bin/cp -rv app/Controllers/* ${DEPLOYPATH}Controllers/
-
-        - /bin/chown -R u1525344:u1525344 ${DEPLOYPATH}
-        - /bin/find ${DEPLOYPATH} -type d -exec chmod 755 {} \;
-        - /bin/find ${DEPLOYPATH} -type f -exec chmod 644 {} \;
+    - export DEPLOYPATH=/home/u1525344/nilaisantri/app
+    - /bin/cp -r app/Models $DEPLOYPATH/Models
+    - /bin/cp -r app/Views $DEPLOYPATH/Views
+    - /bin/cp -r app/Controllers $DEPLOYPATH/Controllers
