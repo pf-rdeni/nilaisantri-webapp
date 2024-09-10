@@ -2,6 +2,11 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home/u1525344/nilaisantri/app
-    - /bin/cp -r app/Models $DEPLOYPATH/Models
-    - /bin/cp -r app/Views $DEPLOYPATH/Views
-    - /bin/cp -r app/Controllers $DEPLOYPATH/Controllers
+    - echo "Starting deployment..." > /home/u1525344/log.txt
+    - echo "Copying Models..." >> /home/u1525344/log.txt
+    - /bin/cp -r /home/u1525344/repositories/nilaisantri-webapp/app/Models $DEPLOYPATH/Models
+    - echo "Copying Views..." >> /home/u1525344/log.txt
+    - /bin/cp -r /home/u1525344/repositories/nilaisantri-webapp/app/Views $DEPLOYPATH/Views
+    - echo "Copying Controllers..." >> /home/u1525344/log.txt
+    - /bin/cp -r /home/u1525344/repositories/nilaisantri-webapp/app/Controllers $DEPLOYPATH/Controllers
+    - echo "Deployment complete!" >> /home/u1525344/log.txt
