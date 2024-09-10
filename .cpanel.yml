@@ -1,0 +1,15 @@
+---
+deployment:
+  tasks:
+    - export DEPLOYPATH=/home/u1525344/nilaisantri/app/
+
+    - hook: post_deploy
+      commands:
+        # Sync Models
+        - /bin/cp -r app/Models/* ${DEPLOYPATH}Models/
+
+        # Sync Views
+        - /bin/cp -r app/Views/* ${DEPLOYPATH}Views/
+
+        # Sync Controllers
+        - /bin/cp -r app/Controllers/* ${DEPLOYPATH}Controllers/

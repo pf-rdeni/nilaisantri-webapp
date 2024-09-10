@@ -27,20 +27,20 @@ class NilaiModel extends Model
                 m.Kategori, 
                 m.NamaMateri, 
                 n.Nilai
-            FROM
-                tbl_nilai n
-            JOIN 
-                tbl_santri s ON n.IdSantri = s.IdSantri
-            JOIN 
-                tbl_materi_pelajaran m ON n.IdMateri = m.IdMateri
-            WHERE
-                n.IdTpq = 411221010225
-                AND n.IdSantri = 20150001
-                AND n.Semester = 1
-                AND n.IdKelas = "SD1"
-            ORDER BY
-                n.IdMateri ASC,
-                n.Semester ASC;';
+                FROM
+                    tbl_nilai n
+                JOIN 
+                    tbl_santri s ON n.IdSantri = s.IdSantri
+                JOIN 
+                    tbl_materi_pelajaran m ON n.IdMateri = m.IdMateri
+                WHERE
+                    n.IdTpq = 411221010225
+                    AND n.IdSantri = 20150001
+                    AND n.Semester = 1
+                    AND n.IdKelas = "SD1"
+                ORDER BY
+                    n.IdMateri ASC,
+                    n.Semester ASC;';
         $query = $db->query($sql);
 
         return $query;
@@ -50,22 +50,22 @@ class NilaiModel extends Model
     {
         $db = db_connect();
         $sql = 'SELECT
-        tbl_nilai.IdSantri, tbl_santri.Nama, tbl_santri.JenisKelamin,
-        tbl_tahun_ajaran.NamaTahunAjaran, tbl_nilai.Semester, 
-        SUM(Nilai) AS TotalNilai, 
-        concat(ROUND(AVG(Nilai),2)) AS NilaiRataRata
-        FROM
-        tbl_nilai, tbl_santri, tbl_tahun_ajaran
-        WHERE
-        tbl_nilai.IdSantri=tbl_santri.IdSantri
-        AND tbl_tahun_ajaran.IdTahunAjaran=tbl_nilai.IdTahunAjaran
-        AND tbl_nilai.IdKelas="SD1"  
-        GROUP BY
-        tbl_nilai.IdSantri,
-        tbl_nilai.Semester
-        ORDER BY
-        tbl_nilai.Semester ASC,
-        TotalNilai DESC';
+                n.IdSantri, s.Nama, s.JenisKelamin,
+                t.NamaTahunAjaran, n.Semester, 
+                SUM(n.Nilai) AS TotalNilai, 
+                ROUND(AVG(n.Nilai), 2) AS NilaiRataRata
+                FROM
+                    tbl_nilai n
+                JOIN
+                    tbl_santri s ON n.IdSantri = s.IdSantri
+                JOIN
+                    tbl_tahun_ajaran t ON n.IdTahunAjaran = t.IdTahunAjaran
+                WHERE
+                    n.IdKelas = "SD1"
+                GROUP BY
+                    n.IdSantri, n.Semester
+                ORDER BY
+                n.Semester ASC, TotalNilai DESC';
         $query = $db->query($sql);
 
         return $query;
