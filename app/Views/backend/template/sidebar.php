@@ -100,13 +100,13 @@
                         <li class="nav-item">
                         <a href=<?php echo base_url('nilai/showSumaryPersemester') ?> class="nav-link">
                             <i class="far fa-circle nav-icon"></i>
-                            <p>Nilai Santri Per Semester</p>
+                            <p>Nilai Per Semester</p>
                         </a>
                         </li>
                         <li class="nav-item">
                         <a href=<?php echo base_url('nilai/showDetail') ?>  class="nav-link">
                             <i class="far fa-circle nav-icon"></i>
-                            <p>Nilai Detail Santri</p>
+                            <p>Nilai Detail</p>
                         </a>
                         </li>
                         <li class="nav-item">
