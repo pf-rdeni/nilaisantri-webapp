@@ -36,8 +36,15 @@ $routes->get('/', 'Pages::index');
 //mengarahkan ke page create
 //$routes->get('/komik/create', 'Komik::create');
 $routes->get('/tpq/tpq', 'Tpq::create');
-
 $routes->delete('/tpq/(:num)', 'Tpq::delete/$1');
+
+//Table Kelas
+$routes->get('kelas', 'Kelas::index');             // List all records (Read)
+$routes->get('kelas/create', 'Kelas::create');     // Show form to create a new record (Create)
+$routes->post('kelas/store', 'Kelas::store');      // Store new record in database (Create)
+$routes->get('kelas/edit/(:num)', 'Kelas::edit/$1');  // Show form to edit a specific record (Read/Update)
+$routes->post('kelas/update/(:num)', 'Kelas::update/$1');  // Update a specific record in database (Update)
+$routes->get('kelas/delete/(:num)', 'Kelas::delete/$1');  // Delete a specific record from database (Delete)
 
 /*
  * --------------------------------------------------------------------

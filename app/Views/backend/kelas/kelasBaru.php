@@ -7,7 +7,7 @@
         </div>
         <!-- /.card-header -->
         <div class="card-body">
-        <form action="<?= base_url('tpq/update/'. "ID") ?>" method="POST">
+        <form action="<?= base_url('kelas/setKelasSantri') ?>" method="POST">
             <table id="example1" class="table table-bordered table-striped">
                 <?php
                 $tableHeaders = '
@@ -33,7 +33,8 @@
                             <td><?= $DataSantri['Tingkat']; ?></td>
                             <td><?= $DataSantri['NamaAyah']; ?></td>
                             <td>
-                                <select name="IdKelas" class="form-control select2" id="FormProfilTpq" required>
+                                <input type="hidden" name="IdTpq[<?= $DataSantri['IdSantri']; ?>]" value="<?= $DataSantri['IdTpq']; ?>">
+                                <select name="IdKelas[<?= $DataSantri['IdSantri']; ?>]" class="form-control select2" id="FormProfilTpq" required>
                                     <option value="" disabled selected>Pilih Kelas</option>
                                     <?php 
                                     $DataKelas = $kelas->getResult();

@@ -63,13 +63,13 @@
                     </a>
                     <ul class="nav nav-treeview" style="display: block;">
                         <li class="nav-item">
-                        <a href=<?php echo base_url('santri/sowSantriKelasBaru') ?> class="nav-link">
+                        <a href=<?php echo base_url('kelas/sowSantriKelasBaru') ?> class="nav-link">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Kelas Baru</p>
                         </a>
                         </li>
                         <li class="nav-item">
-                        <a href=<?php echo base_url('santri/sowSantriKelasBaru') ?> class="nav-link">
+                        <a href=<?php echo base_url('kelas/sowSantriKelasBaru') ?> class="nav-link">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Kenaikan Kelas</p>
                         </a>
