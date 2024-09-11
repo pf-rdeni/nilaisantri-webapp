@@ -1,7 +1,7 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/u1525344/public_html/nilaisantri.simpedis.com/app
+    - export DEPLOYPATH=/home/u1525344/nilaisantri/app
     - echo "Starting deployment..." > /home/u1525344/log.txt
     - echo "Copying Models..." >> /home/u1525344/log.txt
     - /bin/cp -r /home/u1525344/repositories/nilaisantri-webapp/app/Models $DEPLOYPATH/Models
