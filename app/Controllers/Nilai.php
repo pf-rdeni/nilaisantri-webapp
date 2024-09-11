@@ -32,7 +32,7 @@ class Nilai extends BaseController
             'page_title' => 'Rank Data Nilai',
             'nilai' => $datanilai
         ];
-        return view('backend/nilai/santri_sumary_persemester', $data);
+        return view('backend/nilai/nilaiSantriPerSemester', $data);
     }
 
     public function showNilaiProfilDetail()
