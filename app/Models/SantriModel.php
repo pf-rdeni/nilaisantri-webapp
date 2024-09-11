@@ -27,7 +27,7 @@ class SantriModel extends Model
         $db = db_connect();
         $sql = 'SELECT 
         ks.IdTahunAjaran,
-        k.TingkatKelas,
+        k.NamaKelas,
         g.Nama AS GuruNama,
         s.IdSantri,
         s.Nama AS SantriNama,
@@ -49,7 +49,7 @@ class SantriModel extends Model
         WHERE 
             ks.IdTahunAjaran = w.IdTahunAjaran
                     ORDER BY 
-            k.TingkatKelas ASC, s.Nama ASC';
+            k.NamaKelas ASC, s.Nama ASC';
         $query = $db->query($sql);
 
         return $query;

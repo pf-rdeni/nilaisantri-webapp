@@ -21,7 +21,7 @@ class Nilai extends BaseController
             'page_title' => 'Data Nilai',
             'nilai' => $datanilai
         ];
-        return view('backend/nilai/santri_detail', $data);
+        return view('backend/nilai/nilaiSantriDetail', $data);
     }
 
     public function showSumaryPersemester()
@@ -44,7 +44,7 @@ class Nilai extends BaseController
             'nilai'=>  $datanilai
         ];
 
-        return view('backend/nilai/santri_detail_profil', $data);
+        return view('backend/nilai/nilaiSantriDetailPersonal', $data);
 
     }
 

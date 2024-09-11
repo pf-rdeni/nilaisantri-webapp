@@ -32,10 +32,10 @@ class Santri extends BaseController
             'page_title' => 'Data Santri',
             'santri' => $datasantri
         ];
-        return view('backend/santri/santri_perKelas', $data);
+        return view('backend/santri/santriNaikKelas', $data);
     }
 
-    public function setSantriKelasBaru()
+    public function sowSantriKelasBaru()
     {
         //$IdTpq = '411221010225';
         $dataKelas = $this->DataSantri->GetNamaKelas();
@@ -45,6 +45,6 @@ class Santri extends BaseController
             'santri' => $datasantri,
             'kelas' => $dataKelas
         ];
-        return view('backend/santri/santri_setKelas', $data);
+        return view('backend/santri/santriKelasBaru', $data);
     }
 }

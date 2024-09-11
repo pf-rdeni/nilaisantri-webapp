@@ -27,7 +27,7 @@
                         <tr>
                             <td><?php echo $DataSantri->GuruNama; ?></td>
                             <td><?php echo $DataSantri->IdTahunAjaran; ?></td>
-                            <td><?php echo $DataSantri->TingkatKelas; ?></td>
+                            <td><?php echo $DataSantri->NamaKelas; ?></td>
                             <td><?php echo $DataSantri->SantriNama; ?></td>
                             <td><?php echo $DataSantri->JenisKelamin; ?></td>
                             <td>

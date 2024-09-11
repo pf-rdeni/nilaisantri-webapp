@@ -7,7 +7,7 @@ use App\Models\TpqModel;
 
 class Tpq extends BaseController
 {
-
+    public $DataTpq;
     public function __construct()
     {
         $this->DataTpq = new TpqModel();
