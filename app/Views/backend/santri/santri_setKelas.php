@@ -25,8 +25,7 @@
                 <?= $tableHeaders ?>
                 </thead>
                 <tbody>
-                    <?php
-                    foreach ($santri as $DataSantri) : ?>
+                    <?php foreach ($santri as $DataSantri) : ?>
                         <tr>
                             <td><?= $DataSantri['IdSantri']; ?></td>
                             <td><?= $DataSantri['Nama']; ?></td>
@@ -36,10 +35,11 @@
                             <td>
                                 <select name="IdKelas" class="form-control select2" id="FormProfilTpq" required>
                                     <option value="" disabled selected>Pilih Kelas</option>
-                                    <option value="TK">TK</option>
-                                            <option value="SD1">SD1</option>
-                                    <option value="SD2">SD2</option>
-                                    <option value="SD3">SD3</option>
+                                    <?php 
+                                    $DataKelas = $kelas->getResult();
+                                    foreach ($DataKelas as $Kelas): ?>
+                                    <option value=<?php echo $Kelas->IdKelas; ?>><?php echo $Kelas->NamaKelas; ?></option>
+                                    <?php endforeach ?>
                                 </select>
                             </td>
                         </tr>

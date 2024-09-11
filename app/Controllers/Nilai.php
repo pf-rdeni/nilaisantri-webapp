@@ -7,7 +7,7 @@ use App\Models\NilaiModel;
 
 class Nilai extends BaseController
 {
-
+    public $DataNilai;
     public function __construct()
     {
         $this->DataNilai = new NilaiModel();

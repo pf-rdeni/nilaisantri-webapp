@@ -69,13 +69,13 @@
                         </a>
                         </li>
                         <li class="nav-item">
-                        <a href=<?php echo base_url('nilai/setSantriKelasBaru') ?> class="nav-link">
+                        <a href=<?php echo base_url('santri/setSantriKelasBaru') ?> class="nav-link">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Kenaikan Kelas</p>
                         </a>
                         </li>
                         <li class="nav-item">
-                        <a href=<?php echo base_url('nilai/showSumaryPersemester') ?> class="nav-link">
+                        <a href=<?php echo base_url('guru/setWaliSantri') ?> class="nav-link">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Wali Kelas</p>
                         </a>

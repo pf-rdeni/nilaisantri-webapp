@@ -7,10 +7,10 @@ use App\Models\SantriModel;
 
 class Santri extends BaseController
 {
-
+    public $DataSantri;
     public function __construct()
     {
-        $this->DataSantri = new SantriModel();
+       $this->DataSantri = new SantriModel();
     }
 
     public function show()
@@ -38,10 +38,12 @@ class Santri extends BaseController
     public function setSantriKelasBaru()
     {
         //$IdTpq = '411221010225';
-        $datasantri = $this->DataSantri->GetDataSantriStatus("");
+        $dataKelas = $this->DataSantri->GetNamaKelas();
+        $datasantri = $this->DataSantri->GetDataSantriStatus("Baru");
         $data = [
             'page_title' => 'Data Santri',
-            'santri' => $datasantri
+            'santri' => $datasantri,
+            'kelas' => $dataKelas
         ];
         return view('backend/santri/santri_setKelas', $data);
     }

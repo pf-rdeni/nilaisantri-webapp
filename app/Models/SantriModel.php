@@ -58,6 +58,14 @@ class SantriModel extends Model
     public function GetDataSantriStatus($Status)
     {
         return $this->where(['Status' => $Status])->find();
+    }
 
+    public function GetNamaKelas()
+    {
+        $db = db_connect();
+        $sql = 'SELECT IdKelas, NamaKelas from tbl_kelas';
+        $query = $db->query($sql);
+        $query->getResult();
+        return $query;
     }
 }
