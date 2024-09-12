@@ -74,7 +74,7 @@ class Kelas extends BaseController
         }
 
         $dataKelas = $this->kelasModel->GetNamaKelas();
-        $datasantri = $this->kelasModel->GetDataSantriStatus("Baru1");
+        $datasantri = $this->santriModel->GetDataSantriStatus("Baru1");
 
         $data = [
             'page_title' => 'Data Santri',
