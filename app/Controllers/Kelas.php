@@ -82,7 +82,7 @@ class Kelas extends BaseController
             'kelas' => $dataKelas
         ];
 
-        return view('backend/kelas/KelasBaru', $data);
+        return view('backend/kelas/kelasBaru', $data);
     }
 
 
