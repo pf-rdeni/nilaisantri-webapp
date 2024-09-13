@@ -8,7 +8,7 @@
         <!-- /.card-header -->
         <div class="card-body">
         <form action="<?= base_url('kelas/setKelasSantri') ?>" method="POST">
-            <table id="example1" class="table table-bordered table-striped">
+            <table id="kenaikanKelas" class="table table-bordered table-striped">
                 <?php
                 $tableHeaders = '
                     <tr>
@@ -17,7 +17,7 @@
                         <th>Jenis Kelamin</th>
                         <th>Kelas Diajukan</th>
                         <th>Nama Ayah</th>
-                        <th>Kelas Baru</th>
+                        <th>Kelas Baru Rekomendasi</th>
                     </tr>
                 ';
                 ?>
@@ -39,7 +39,10 @@
                                     <?php 
                                     $DataKelas = $kelas->getResult();
                                     foreach ($DataKelas as $Kelas): ?>
-                                    <option value=<?php echo $Kelas->IdKelas; ?>><?php echo $Kelas->NamaKelas; ?></option>
+                                        <option value="<?= $Kelas->IdKelas; ?>" 
+                                            <?= $Kelas->IdKelas == $DataSantri['nextKelas'] ? 'selected' : '' ?>>
+                                            <?= $Kelas->IdKelas; ?>
+                                        </option>
                                     <?php endforeach ?>
                                 </select>
                             </td>

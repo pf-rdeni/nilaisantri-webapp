@@ -37,6 +37,11 @@ class Kelas extends BaseController
         $dataKelas = $this->kelasModel->getNamaKelas();
         $dataSantri = $this->santriModel->getDataSantriStatus("Baru");
 
+        // Add logic to get recommended class
+        foreach ($dataSantri as &$santri) {
+            $santri['nextKelas'] = $this->getNextKelas($santri['Tingkat']);
+        }
+
         $data = [
             'page_title' => 'Data Santri',
             'santri' => $dataSantri,
@@ -45,6 +50,7 @@ class Kelas extends BaseController
 
         return view('backend/kelas/kelasBaru', $data);
     }
+
 
     public function setKelasSantri()
     {
@@ -136,32 +142,45 @@ class Kelas extends BaseController
 
     public function showListSantriPerKelas($idTahunAjaran = null)
     {
+        $currentYear = date('Y');
+        $currentMonth = date('n');
+
+        // Determine the current and previous academic years
+        $previousAcademicYear = ($currentMonth >= 7) ? ($currentYear - 1) . $currentYear : ($currentYear - 2) . ($currentYear - 1);
+        $currentAcademicYear = ($currentMonth >= 7) ? $currentYear . ($currentYear + 1) : ($currentYear - 1). ($currentYear + 1);
+
+        // Query for both academic years
         $this->kelasModel->select('tbl_kelas_santri.IdTahunAjaran, tbl_kelas_santri.IdKelas, tbl_kelas.NamaKelas, COUNT(tbl_kelas_santri.IdSantri) AS SumIdKelas')
-            ->join('tbl_kelas', 'tbl_kelas_santri.IdKelas = tbl_kelas.IdKelas')
-            ->groupBy('tbl_kelas_santri.IdTahunAjaran, tbl_kelas_santri.IdKelas')
-            ->orderBy('tbl_kelas_santri.IdTahunAjaran', 'ASC')
-            ->orderBy('tbl_kelas_santri.IdKelas', 'ASC')
-            ->where('tbl_kelas_santri.status', true);
-
-        if (!is_null($idTahunAjaran)) {
-            $this->kelasModel->where('tbl_kelas_santri.IdTahunAjaran', $idTahunAjaran);
-        } else {
-            $currentYear = date('Y');
-            $currentMonth = date('n');
-            $idTahunAjaran = ($currentMonth >= 7) ? ($currentYear - 1) . $currentYear : $currentYear . ($currentYear + 1);
-
-            $this->kelasModel->where('tbl_kelas_santri.IdTahunAjaran', $idTahunAjaran);
-        }
+                        ->join('tbl_kelas', 'tbl_kelas_santri.IdKelas = tbl_kelas.IdKelas')
+                        ->groupBy('tbl_kelas_santri.IdTahunAjaran, tbl_kelas_santri.IdKelas')
+                        ->orderBy('tbl_kelas_santri.IdTahunAjaran', 'ASC')
+                        ->orderBy('tbl_kelas_santri.IdKelas', 'ASC')
+                        ->where('tbl_kelas_santri.status', true)
+                        ->whereIn('tbl_kelas_santri.IdTahunAjaran', [$previousAcademicYear, $currentAcademicYear]);
 
         $dataKelas = $this->kelasModel->get()->getResultArray();
 
+        // Separate data into current and previous academic years
+        $kelas_previous = array_filter($dataKelas, function($item) use ($previousAcademicYear) {
+            return $item['IdTahunAjaran'] === $previousAcademicYear;
+        });
+
+        $kelas_current = array_filter($dataKelas, function($item) use ($currentAcademicYear) {
+            return $item['IdTahunAjaran'] === $currentAcademicYear;
+        });
+
+        // Prepare the data to be sent to the view
         $data = [
             'page_title' => 'Daftar Naik Kelas',
-            'kelas' => $dataKelas
+            'kelas_previous' => $kelas_previous,
+            'kelas_current' => $kelas_current,
+            'current_tahun_ajaran' => $currentAcademicYear,
+            'previous_tahun_ajaran' => $previousAcademicYear
         ];
 
         return view('backend/kelas/naikKelas', $data);
     }
+
 
     public function updateNaikKelas($idTahunAjaran, $idKelas)
     {
@@ -210,6 +229,7 @@ class Kelas extends BaseController
         $classMapping = [
             'TK1' => 'TK2',
             'TK2' => 'SD1',
+            'TK' => 'SD1',
             'SD1' => 'SD2',
             'SD2' => 'SD3',
             'SD3' => 'SD4',

@@ -61,13 +61,24 @@
 <script>
     $(function() {
 
-        //DataTable
-        $("#example1").DataTable({
-            "responsive": true,
-            "lengthChange": false,
-            "autoWidth": false,
-            "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+        // Reusable function to initialize DataTables with common options
+        function initializeDataTable(selector, paging = true, buttons = []) {
+            $(selector).DataTable({
+                "responsive": true,
+                "lengthChange": false,
+                "autoWidth": false,
+                "paging": paging,
+                "buttons": buttons
+            }).buttons().container().appendTo(`${selector}_wrapper .col-md-6:eq(0)`);
+        }
+
+        // Initialize DataTables
+        initializeDataTable("#previousKelas", true, ["excel", "pdf", "print"]);
+        initializeDataTable("#currentKelas", true, ["excel", "pdf", "print"]);
+        initializeDataTable("#kenaikanKelas", false, ["excel", "pdf", "print"]); // Show all rows (paging disabled)
+        initializeDataTable("#example1", true, ["copy", "csv", "excel", "pdf", "print", "colvis"]);
+
+        // Initialize DataTable for #example2 with different settings
         $('#example2').DataTable({
             "paging": true,
             "lengthChange": false,
@@ -78,19 +89,12 @@
             "responsive": true,
         });
 
-        //Date picker
-        $('#DateForEdit').datetimepicker({
+        // Date picker initialization
+        $('#DateForEdit, #DateForInput').datetimepicker({
             format: 'L'
         });
 
-        //Date picker
-        $('#DateForInput').datetimepicker({
-            format: 'L'
-        });
-
-
-
-    })
+    });
 </script>
 
 <script>
