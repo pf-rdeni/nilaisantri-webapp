@@ -45,6 +45,25 @@ $routes->post('kelas/store', 'Kelas::store');      // Store new record in databa
 $routes->get('kelas/edit/(:num)', 'Kelas::edit/$1');  // Show form to edit a specific record (Read/Update)
 $routes->post('kelas/update/(:num)', 'Kelas::update/$1');  // Update a specific record in database (Update)
 $routes->get('kelas/delete/(:num)', 'Kelas::delete/$1');  // Delete a specific record from database (Delete)
+$routes->get('kelas/showListSantriPerKelas/(:any)', 'Kelas::showListSantriPerKelas/$1');
+$routes->get('kelas/updateNaikKelas/(:num)/(:num)', 'Kelas::updateNaikKelas/$1/$2');
+
+//Tabel Materi
+$routes->get('materipelajaran', 'MateriPelajaran::index');
+$routes->get('materipelajaran/create', 'MateriPelajaran::create');
+$routes->post('materipelajaran/store', 'MateriPelajaran::store');
+$routes->get('materipelajaran/edit/(:num)', 'MateriPelajaran::edit/$1');
+$routes->post('materipelajaran/update/(:num)', 'MateriPelajaran::update/$1');
+$routes->get('materipelajaran/delete/(:num)', 'MateriPelajaran::delete/$1');
+
+//Tabel kelas Materi Pelajaran
+$routes->get('kelasMateriPelajaran', 'KelasMateriPelajaran::index');
+$routes->get('kelasMateriPelajaran/create', 'KelasMateriPelajaran::create');
+$routes->post('kelasMateriPelajaran/store', 'KelasMateriPelajaran::store');
+$routes->get('kelasMateriPelajaran/edit/(:num)', 'KelasMateriPelajaran::edit/$1');
+$routes->post('kelasMateriPelajaran/update/(:num)', 'KelasMateriPelajaran::update/$1');
+$routes->get('kelasMateriPelajaran/delete/(:num)', 'KelasMateriPelajaran::delete/$1');
+$routes->get('kelasMateriPelajaran/kelasMateriPelajaranModel/(:segment)/(:segment)', 'KelasMateriPelajaran::kelasMateriPelajaranModel/$1/$2');
 
 /*
  * --------------------------------------------------------------------

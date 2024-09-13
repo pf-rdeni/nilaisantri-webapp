@@ -8,9 +8,17 @@ class NilaiModel extends Model
 {
     protected $table      = 'tbl_nilai';
     protected $primaryKey = 'Id';
-    protected $useAutoIncrement = false;
+    protected $useAutoIncrement = true;
     protected $useTimestamps = true;
-    protected $allowedFields = ['Id', 'Nilai'];
+    protected $allowedFields = [
+                'Id', 
+                'Nilai',
+                'IdTpq',
+                'IdSantri',
+                'IdKelas',
+                'IdTahunAjaran',
+                'IdMateri',
+                'Semester'];
     
     public function GetDataNilaiDetail($id = false)
     {
@@ -69,5 +77,15 @@ class NilaiModel extends Model
         $query = $db->query($sql);
 
         return $query;
+    }
+
+    public function insertNilai($data)
+    {
+        // Validate data array
+        if (!empty($data)) {
+            return $this->insert($data);
+        } else {
+            return false;
+        }
     }
 }

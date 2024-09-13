@@ -17,6 +17,7 @@ class KelasModel extends Model
         'IdTpq', 
         'IdSantri', 
         'IdTahunAjaran', 
+        'Status',
         'created_at', 
         'updated_at'
     ];
