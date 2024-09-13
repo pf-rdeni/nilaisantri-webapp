@@ -37,4 +37,10 @@ class KelasModel extends Model
         $query->getResult();
         return $query;
     }
+
+    public function getSantriByTahunAjaran($idTahunAjaran)
+    {
+        return $this->where('IdTahunAjaran', $idTahunAjaran)
+                    ->findAll();
+    }
 }
