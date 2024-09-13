@@ -90,7 +90,7 @@
                         <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
-                    <ul class="nav nav-treeview">
+                    <ul class="nav nav-treeview" style="display: block;">
                         <li class="nav-item">
                         <a href=<?php echo base_url('santri/showSantriPerKelas') ?> class="nav-link">
                             <i class="far fa-circle nav-icon"></i>
@@ -102,13 +102,6 @@
                             <i class="far fa-circle nav-icon"></i>
                             <p>Nilai Per Semester</p>
                         </a>
-                        </li>
-                        <li class="nav-item">
-                        <a href=<?php echo base_url('nilai/showDetail') ?>  class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Nilai Detail</p>
-                        </a>
-                        </li>
                         <li class="nav-item">
                         <a href=<?php echo base_url('nilai/showNilaiProfilDetail') ?>  class="nav-link">
                             <i class="far fa-circle nav-icon"></i>

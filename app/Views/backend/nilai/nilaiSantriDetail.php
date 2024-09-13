@@ -3,20 +3,41 @@
 <div class="col-12">
     <?php echo session()->getFlashdata('pesan'); ?>
     <div class="card">
+        <?php
+        // Extracting the first result from $dataNilai (assuming it has at least one result)
+        $dataNilai = $nilai->getResult();
+        if (!empty($dataNilai)) {
+            $firstResult = $dataNilai[0];
+            $NamaSantri = $firstResult->Nama;
+            $Semester = $firstResult->Semester;
+            // Format the Tahun with "/"
+            $Tahun = $firstResult->IdTahunAjaran;
+            if (strlen($Tahun) == 8) {
+                $Tahun = substr($Tahun, 0, 4) . '/' . substr($Tahun, 4, 4);
+            } else {
+                $Tahun = 'Invalid Year Format'; 
+            }
+        } else {
+            // Default values or handle the case when $dataNilai is empty
+            $NamaSantri = 'N/A';
+            $Tahun = 'N/A';
+            $Semester = 'N/A';
+        }
+        ?>
+
         <div class="card-header">
-            <h3 class="card-title">Data Nilai Santri Detail</h3>
-        </div>
-        <!-- /.card-header -->
+            <h3 class="card-title">
+                Data Nilai Santri <strong><?= htmlspecialchars($NamaSantri, ENT_QUOTES, 'UTF-8') ?></strong> Tahun <?= htmlspecialchars($Tahun, ENT_QUOTES, 'UTF-8') ?> Semester <?= htmlspecialchars($Semester, ENT_QUOTES, 'UTF-8') ?>
+            </h3>
+        </div>       <!-- /.card-header -->
         <div class="card-body">
             <table id="example1" class="table table-bordered table-striped">
                 <thead>
                     <tr>
-                        <th>Id Materi</th>
-                        <th>Nama Materi</th>
                         <th>Kategori</th>
+                        <th>Nama Materi</th>
                         <th>Nilai</th>
-                        <th>Tahun Ajaran</th>
-                        <th>Semester</th>
+                        <th>Catatan</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -27,12 +48,10 @@
 
                     foreach ($MainDataNilai as $DataNilai) : ?>
                         <tr>
-                            <td><?php echo $DataNilai->IdMateri; ?></td>
-                            <td><?php echo $DataNilai->NamaMateri; ?></td>
                             <td><?php echo $DataNilai->Kategori; ?></td>
+                            <td><?php echo $DataNilai->NamaMateri; ?></td>
                             <td><?php echo $DataNilai->Nilai; ?></td>
-                            <td><?php echo $DataNilai->IdTahunAjaran; ?></td>
-                            <td><?php echo $DataNilai->Semester; ?></td>
+                            <td><?php echo $DataNilai->Catatan; ?></td>
                             <td>
                                 <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#EditNilai<?= $DataNilai->Id  ?>"><i class="fas fa-edit"></i></button>
                             </td>
@@ -41,12 +60,10 @@
                 </tbody>
                 <tfoot>
                     <tr>
-                        <th>Id Materi</th>
-                        <th>Nama Materi</th>
                         <th>Kategori</th>
+                        <th>Nama Materi</th>
                         <th>Nilai</th>
-                        <th>Tahun Ajaran</th>
-                        <th>Semester</th>
+                        <th>Catatan</th>
                         <th>Aksi</th>
                     </tr>
                 </tfoot>
@@ -75,14 +92,17 @@ foreach ($MainDataNilai as $DataNilai) : ?>
                     <form action="<?= base_url('nilai/update/'. $DataNilai->Id) ?>" method="POST">
                         <input type="hidden" name="Id" value= <?= $DataNilai->Id ?>>
                         <input type="hidden" name="NamaMateri" value="<?= htmlspecialchars($DataNilai->NamaMateri, ENT_QUOTES, 'UTF-8') ?>">
+                        
                         <div class="form-group">
                             <label for="FormProfilTpq">Kategori</label>
                             <span class="form-control" id="FormProfilTpq"><?= $DataNilai->Kategori ?></span>
                         </div>
+                        
                         <div class="form-group">
                             <label for="FormProfilTpq">Nama Materi</label>
                             <span class="form-control" id="FormProfilTpq"><?= $DataNilai->NamaMateri ?></span>
                         </div>
+                        
                         <div class="form-group">
                             <label for="FormProfilTpq">Nilai</label>
                             <input type="number" name="Nilai" class="form-control" id="FormProfilTpq" required 
@@ -91,11 +111,16 @@ foreach ($MainDataNilai as $DataNilai) : ?>
                                 oninvalid="this.setCustomValidity('Nilai harus antara 50 dan 95')" 
                                 oninput="this.setCustomValidity('')">
                         </div>
+                        <div class="form-group">
+                            <label for="Catatan">Catatan</label>
+                            <textarea name="Catatan" class="form-control" id="Catatan" placeholder="Tambahkan catatan jika diperlukan"><?= isset($DataNilai->Catatan) ? htmlspecialchars($DataNilai->Catatan, ENT_QUOTES, 'UTF-8') : '' ?></textarea>
+                        </div>
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i>Simpan</button>
                         </div>
                     </form>
                 </div>
+
             </div>
         </div>
     </div>

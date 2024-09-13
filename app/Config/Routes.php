@@ -38,6 +38,9 @@ $routes->get('/', 'Pages::index');
 $routes->get('/tpq/tpq', 'Tpq::create');
 $routes->delete('/tpq/(:num)', 'Tpq::delete/$1');
 
+//Table Nilai
+$routes->get('nilai/showDetail/(:num)/(:num)', 'Nilai::showDetail/$1/$2');
+
 //Table Kelas
 $routes->get('kelas', 'Kelas::index');             // List all records (Read)
 $routes->get('kelas/create', 'Kelas::create');     // Show form to create a new record (Create)

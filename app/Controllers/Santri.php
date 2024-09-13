@@ -31,6 +31,6 @@ class Santri extends BaseController
             'page_title' => 'Data Santri',
             'santri' => $datasantri
         ];
-        return view('backend/santri/santriNaikKelas', $data);
+        return view('backend/santri/santriPerKelas', $data);
     }
 }

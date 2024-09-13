@@ -31,12 +31,22 @@
                             <td><?php echo $DataSantri->SantriNama; ?></td>
                             <td><?php echo $DataSantri->JenisKelamin; ?></td>
                             <td>
-                                <a href="<?php echo base_url('nilai/showDetail') ?>" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
-                                <a href="<?php echo base_url('nilai/showDetail') ?>" class="btn btn-success btn-sm"><i class="fas fa-eye"></i></a>
+                                <a href="<?= base_url('nilai/showDetail/' . $DataSantri->IdSantri . '/' . 1) ?>" class="btn btn-warning btn-sm">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a href="<?= base_url('nilai/showDetail/' . $DataSantri->IdSantri . '/' . 1) ?>" class="btn btn-success btn-sm">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+
                             </td>
                             <td>
-                                <a href="" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
-                                <a href="" class="btn btn-danger btn-sm"><i class="fas fa-eye"></i></a>
+                                <a href="<?= base_url('nilai/showDetail/' . $DataSantri->IdSantri . '/' . 2) ?>" class="btn btn-warning btn-sm">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a href="<?= base_url('nilai/showDetail/' . $DataSantri->IdSantri . '/' . 1) ?>" class="btn btn-success btn-sm">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+
                             </td>
                         </tr>
                     <?php endforeach ?>

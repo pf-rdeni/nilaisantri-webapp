@@ -76,7 +76,7 @@
         initializeDataTable("#previousKelas", true, ["excel", "pdf", "print"]);
         initializeDataTable("#currentKelas", true, ["excel", "pdf", "print"]);
         initializeDataTable("#kenaikanKelas", false, ["excel", "pdf", "print"]); // Show all rows (paging disabled)
-        initializeDataTable("#example1", true, ["copy", "csv", "excel", "pdf", "print", "colvis"]);
+        initializeDataTable("#example1", true, ["excel", "pdf", "print", "colvis"]);
 
         // Initialize DataTable for #example2 with different settings
         $('#example2').DataTable({

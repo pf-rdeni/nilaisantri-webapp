@@ -6,86 +6,61 @@ use CodeIgniter\Model;
 
 class NilaiModel extends Model
 {
-    protected $table      = 'tbl_nilai';
+    protected $table = 'tbl_nilai';
     protected $primaryKey = 'Id';
     protected $useAutoIncrement = true;
     protected $useTimestamps = true;
     protected $allowedFields = [
-                'Id', 
-                'Nilai',
-                'IdTpq',
-                'IdSantri',
-                'IdKelas',
-                'IdTahunAjaran',
-                'IdMateri',
-                'Semester'];
+        'Id', 
+        'Nilai',
+        'IdTpq',
+        'IdSantri',
+        'IdKelas',
+        'IdTahunAjaran',
+        'IdMateri',
+        'Semester',
+        'Catatan',
+        'created_at', 
+        'updated_at'
+    ];
     
-    public function GetDataNilaiDetail($id = false)
-    {
-        $db = db_connect();
-        $sql = 'SELECT
-                n.Id,
-                n.IdTahunAjaran, 
-                n.Semester, 
-                n.IdTpq, 
-                n.IdKelas, 
-                s.IdSantri, 
-                s.Nama, 
-                n.IdMateri, 
-                m.Kategori, 
-                m.NamaMateri, 
-                n.Nilai
-                FROM
-                    tbl_nilai n
-                JOIN 
-                    tbl_santri s ON n.IdSantri = s.IdSantri
-                JOIN 
-                    tbl_materi_pelajaran m ON n.IdMateri = m.IdMateri
-                WHERE
-                    n.IdTpq = 411221010225
-                    AND n.IdSantri = 20150001
-                    AND n.Semester = 1
-                    AND n.IdKelas = "SD1"
-                ORDER BY
-                    n.IdMateri ASC,
-                    n.Semester ASC;';
-        $query = $db->query($sql);
+    protected $createdField = 'created_at';
+    protected $updatedField = 'updated_at';
 
-        return $query;
-        
-    }
-    public function GetDataNilaiPerSemetser($id = false)
+    // Retrieve detailed nilai data
+    public function getDataNilaiDetail($IdSantri, $IdSemester)
     {
-        $db = db_connect();
-        $sql = 'SELECT
-                n.IdSantri, s.Nama, s.JenisKelamin,
-                t.NamaTahunAjaran, n.Semester, 
-                SUM(n.Nilai) AS TotalNilai, 
-                ROUND(AVG(n.Nilai), 2) AS NilaiRataRata
-                FROM
-                    tbl_nilai n
-                JOIN
-                    tbl_santri s ON n.IdSantri = s.IdSantri
-                JOIN
-                    tbl_tahun_ajaran t ON n.IdTahunAjaran = t.IdTahunAjaran
-                WHERE
-                    n.IdKelas = "SD1"
-                GROUP BY
-                    n.IdSantri, n.Semester
-                ORDER BY
-                n.Semester ASC, TotalNilai DESC';
-        $query = $db->query($sql);
+        $sql = 'SELECT n.Id, n.IdTahunAjaran, n.Semester, n.IdTpq, n.IdKelas, 
+                       s.IdSantri, s.Nama, n.IdMateri, m.Kategori, m.NamaMateri, n.Nilai, n.Catatan
+                FROM tbl_nilai n
+                JOIN tbl_santri s ON n.IdSantri = s.IdSantri
+                JOIN tbl_materi_pelajaran m ON n.IdMateri = m.IdMateri
+                WHERE n.IdSantri = '.$IdSantri.'
+                AND n.Semester = '.$IdSemester.'
+                AND n.IdKelas = "SD1"
+                ORDER BY n.IdMateri ASC, n.Semester ASC';
 
-        return $query;
+        return db_connect()->query($sql);
     }
 
+    // Retrieve nilai data per semester
+    public function getDataNilaiPerSemester()
+    {
+        $sql = 'SELECT n.IdSantri, s.Nama, s.JenisKelamin, t.NamaTahunAjaran, n.Semester, 
+                       SUM(n.Nilai) AS TotalNilai, ROUND(AVG(n.Nilai), 2) AS NilaiRataRata
+                FROM tbl_nilai n
+                JOIN tbl_santri s ON n.IdSantri = s.IdSantri
+                JOIN tbl_tahun_ajaran t ON n.IdTahunAjaran = t.IdTahunAjaran
+                WHERE n.IdKelas = "SD1"
+                GROUP BY n.IdSantri, n.Semester
+                ORDER BY n.Semester ASC, TotalNilai DESC';
+
+        return db_connect()->query($sql);
+    }
+
+    // Insert nilai data
     public function insertNilai($data)
     {
-        // Validate data array
-        if (!empty($data)) {
-            return $this->insert($data);
-        } else {
-            return false;
-        }
+        return !empty($data) ? $this->insert($data) : false;
     }
 }
