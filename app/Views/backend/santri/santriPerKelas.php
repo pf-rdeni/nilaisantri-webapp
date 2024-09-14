@@ -22,7 +22,6 @@
                 <tbody>
                     <?php
                      $MainDataNilai = $santri->getResult();
-                     $MainDataColumn = $santri->getFieldNames();
                     foreach ($MainDataNilai as $DataSantri) : ?>
                         <tr>
                             <td><?php echo $DataSantri->GuruNama; ?></td>

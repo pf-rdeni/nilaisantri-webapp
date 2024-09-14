@@ -55,30 +55,30 @@
                 </li>
                 <li class="nav-item" >
                     <a href="#" class="nav-link">
-                        <i class="nav-icon fas fa-users"></i>
+                        <i class="nav-icon fas fa-cog"></i>
                         <p>
                         Setting
                         <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
-                    <ul class="nav nav-treeview" style="display: block;">
+                    <ul class="nav nav-treeview" style="display: none;"> <!-- none; or block -->;
                         <li class="nav-item">
-                        <a href=<?php echo base_url('kelas/showSantriKelasBaru') ?> class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Kelas Baru</p>
-                        </a>
+                            <a href=<?php echo base_url('kelas/showSantriKelasBaru') ?> class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Kelas Baru</p>
+                            </a>
                         </li>
                         <li class="nav-item">
-                        <a href=<?php echo base_url('kelas/showListSantriPerKelas') ?> class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Kenaikan Kelas</p>
-                        </a>
+                            <a href=<?php echo base_url('kelas/showListSantriPerKelas') ?> class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Kenaikan Kelas</p>
+                            </a>
                         </li>
                         <li class="nav-item">
-                        <a href=<?php echo base_url('guru/setWaliSantri') ?> class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Wali Kelas</p>
-                        </a>
+                            <a href=<?php echo base_url('guru/setWaliSantri') ?> class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Wali Kelas</p>
+                            </a>
                         </li>
                     </ul>
                 </li>
@@ -90,7 +90,7 @@
                         <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
-                    <ul class="nav nav-treeview" style="display: block;">
+                    <ul class="nav nav-treeview" style="display: none;">
                         <li class="nav-item">
                         <a href=<?php echo base_url('santri/showSantriPerKelas') ?> class="nav-link">
                             <i class="far fa-circle nav-icon"></i>
@@ -110,7 +110,53 @@
                         </li>
                     </ul>
                 </li>
-
+                <li class="nav-item" >
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-user"></i>
+                        <p>
+                        Wali Kelas
+                        <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview" style="display: none;">
+                        <?php 
+                            $IdGuru='2101075810760001';
+                            $encrypter = \Config\Services::encrypter();
+                            $encryptedIdGuru = bin2hex($encrypter->encrypt($IdGuru));;?>
+                        <li class="nav-item">
+                            <a href=<?php echo base_url('') ?> class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Absensi Santri</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href=<?php echo base_url('') ?> class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Prestasi Santri</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href=<?php echo base_url('') ?> class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Tabungan Santri</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href=<?php echo base_url('') ?> class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Iuaran Santri</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href=<?php 
+                            
+                            echo base_url('santri/showSantriPerKelas/'.$encryptedIdGuru) ?> class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Nilai Per Semester</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

@@ -51,6 +51,7 @@ $routes->post('kelas/update/(:num)', 'Kelas::update/$1');  // Update a specific 
 $routes->get('kelas/delete/(:num)', 'Kelas::delete/$1');  // Delete a specific record from database (Delete)
 $routes->get('kelas/showListSantriPerKelas/(:any)', 'Kelas::showListSantriPerKelas/$1');
 $routes->get('kelas/updateNaikKelas/(:num)/(:num)', 'Kelas::updateNaikKelas/$1/$2');
+$routes->get('kelas/showSantriPerKelas/(:any)', 'Kelas::showSantriPerKelas/$1');
 
 //Tabel Materi
 $routes->get('materipelajaran', 'MateriPelajaran::index');
