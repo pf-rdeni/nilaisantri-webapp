@@ -7,7 +7,7 @@ use App\Models\GuruModel;
 
 class Guru extends BaseController
 {
-
+    protected $DataModels;
     public function __construct()
     {
         $this->DataModels = new GuruModel();

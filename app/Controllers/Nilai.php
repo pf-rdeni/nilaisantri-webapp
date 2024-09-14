@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Controllers;
-
 use App\Models\NilaiModel;
 
 class Nilai extends BaseController
@@ -28,25 +27,23 @@ class Nilai extends BaseController
 
     public function showSumaryPersemester()
     {
-        $IdTpq = '411221010225';
-        $datanilai = $this->DataNilai->GetDataNilaiPerSemetser($IdTpq);
+        $datanilai = $this->DataNilai->getDataNilaiPerSemester();
         return view('backend/nilai/nilaiSantriPerSemester', [
             'page_title' => 'Rank Data Nilai',
             'nilai' => $datanilai
         ]);
     }
 
-    public function showNilaiProfilDetail()
+    public function showNilaiProfilDetail($IdSantri)
     {
-        $id = 20150001;
-        $datanilai = $this->DataNilai->GetDataNilaiDetail($id);
+        $datanilai = $this->DataNilai->GetDataNilaiDetail($IdSantri, 1);
         return view('backend/nilai/nilaiSantriDetailPersonal', [
             'page_title' => 'Detail Nilai',
             'nilai' => $datanilai
         ]);
     }
 
-    public function update($id)
+    public function update()
     {
         $validationRules = [
             'Nilai' => [
@@ -73,9 +70,11 @@ class Nilai extends BaseController
             
             return redirect()->to('/nilai/showDetail/')->withInput()->with('validation', $validation);
         } 
-
+        $Id=$this->request->getVar('Id');
+        $IdSantri= $this->request->getVar('IdSantri');
+        $Semester =$this->request->getVar('Semester');
         $this->DataNilai->save([
-            'Id' => $this->request->getVar('Id'),
+            'Id' => $Id,
             'Nilai' => $this->request->getVar('Nilai'),
             'Catatan' => $this->request->getVar('Catatan')
         ]);
@@ -88,6 +87,6 @@ class Nilai extends BaseController
             </button>
             </div>');
         
-        return redirect()->to('/nilai/showDetail');
+        return redirect()->to('/nilai/showDetail/'.$IdSantri.'/'.$Semester);
     }
 }

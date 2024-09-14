@@ -23,19 +23,17 @@
                 <tbody>
                     <?php
                     $MainDataNilai = $nilai->getResult();
-                    $MainDataColumn = $nilai->getFieldNames();
-
                     foreach ($MainDataNilai as $DataNilai) : ?>
                         <tr>
                             <td><?php echo $DataNilai->IdSantri; ?></td>
                             <td><?php echo $DataNilai->Nama; ?></td>
                             <td><?php echo $DataNilai->JenisKelamin; ?></td>
-                            <td><?php echo $DataNilai->NamaTahunAjaran; ?></td>
+                            <td><?php echo $DataNilai->IdTahunAjaran; ?></td>
                             <td><?php echo $DataNilai->Semester; ?></td>
                             <td><?php echo $DataNilai->TotalNilai; ?></td>
                             <td><?php echo $DataNilai->NilaiRataRata; ?></td>
                             <td>
-                                <a href="<?php echo base_url('nilai/showDetail/' . $DataNilai->IdSantri) ?>" class="btn btn-warning btn-sm"><i class="fas fa-list"></i></a>
+                                <a href="<?php echo base_url('nilai/showDetail/' . $DataNilai->IdSantri.'/'.$DataNilai->Semester) ?>" class="btn btn-warning btn-sm"><i class="fas fa-list"></i></a>
 
                             </td>
                         </tr>

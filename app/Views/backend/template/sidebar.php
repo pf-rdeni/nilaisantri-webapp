@@ -103,7 +103,7 @@
                             <p>Nilai Per Semester</p>
                         </a>
                         <li class="nav-item">
-                        <a href=<?php echo base_url('nilai/showNilaiProfilDetail') ?>  class="nav-link">
+                        <a href=<?php echo base_url('nilai/showNilaiProfilDetail'.'/'.'20150001') ?>  class="nav-link">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Profil Detail</p>
                         </a>

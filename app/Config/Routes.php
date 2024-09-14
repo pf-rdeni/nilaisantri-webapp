@@ -40,6 +40,7 @@ $routes->delete('/tpq/(:num)', 'Tpq::delete/$1');
 
 //Table Nilai
 $routes->get('nilai/showDetail/(:num)/(:num)', 'Nilai::showDetail/$1/$2');
+$routes->get('nilai/showNilaiProfilDetail/(:any)', 'Nilai::showNilaiProfilDetail/$1');
 
 //Table Kelas
 $routes->get('kelas', 'Kelas::index');             // List all records (Read)

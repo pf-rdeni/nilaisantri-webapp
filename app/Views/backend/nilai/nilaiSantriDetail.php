@@ -44,8 +44,6 @@
                 <tbody>
                     <?php
                     $MainDataNilai=$nilai->getResult();
-                    $MainDataColumn=$nilai->getFieldNames();
-
                     foreach ($MainDataNilai as $DataNilai) : ?>
                         <tr>
                             <td><?php echo $DataNilai->Kategori; ?></td>
@@ -77,7 +75,6 @@
 <!-- Modal Edit Data-->
 <?php 
 $MainDataNilai=$nilai->getResult();
-$MainDataColumn=$nilai->getFieldNames();
 foreach ($MainDataNilai as $DataNilai) : ?>
     <div class="modal fade" id="EditNilai<?= $DataNilai->Id ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" data-backdrop="static" aria-hidden="true">
         <div class="modal-dialog " role="document">
@@ -89,8 +86,10 @@ foreach ($MainDataNilai as $DataNilai) : ?>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="<?= base_url('nilai/update/'. $DataNilai->Id) ?>" method="POST">
+                    <form action="<?= base_url('nilai/update/') ?>" method="POST">
                         <input type="hidden" name="Id" value= <?= $DataNilai->Id ?>>
+                        <input type="hidden" name="IdSantri" value= <?= $DataNilai->IdSantri ?>>
+                        <input type="hidden" name="Semester" value= <?= $DataNilai->Semester ?>>
                         <input type="hidden" name="NamaMateri" value="<?= htmlspecialchars($DataNilai->NamaMateri, ENT_QUOTES, 'UTF-8') ?>">
                         
                         <div class="form-group">
