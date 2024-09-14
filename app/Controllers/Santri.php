@@ -41,6 +41,15 @@ class Santri extends BaseController
 
         return view('backend/santri/santriPerKelas', $data);
     }
+    
+    public function showKontakSantri($IdSantri = null) 
+    {
 
+        $data = [
+            'page_title' => 'Kontak Santri',
+            'santri' => $datasantri=""
+        ];
+        return view('backend/santri/kontakSantri', $data);
+    }
 
 }

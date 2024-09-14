@@ -108,6 +108,12 @@
                             <p>Profil Detail</p>
                         </a>
                         </li>
+                        <li class="nav-item">
+                            <a href=<?php echo base_url('santri/showKontakSantri') ?> class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Kontak Santri</p>
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 <li class="nav-item no-hover" >
@@ -123,6 +129,12 @@
                             $IdGuru='2101075810760001';
                             $encrypter = \Config\Services::encrypter();
                             $encryptedIdGuru = bin2hex($encrypter->encrypt($IdGuru));;?>
+                        <li class="nav-item">
+                            <a href=<?php echo base_url('santri/showKontakSantri') ?> class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Kontak Santri</p>
+                            </a>
+                        </li>
                         <li class="nav-item">
                             <a href=<?php echo base_url('') ?> class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
