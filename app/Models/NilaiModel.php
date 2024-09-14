@@ -27,20 +27,22 @@ class NilaiModel extends Model
     protected $createdField = 'created_at';
     protected $updatedField = 'updated_at';
 
-    // Retrieve detailed nilai data
     public function getDataNilaiDetail($IdSantri, $IdSemester)
     {
+        // Base SQL query
         $sql = 'SELECT n.Id, n.IdTahunAjaran, n.Semester, n.IdTpq, n.IdKelas, 
-                       s.IdSantri, s.Nama, n.IdMateri, m.Kategori, m.NamaMateri, n.Nilai, n.Catatan
+                    s.IdSantri, s.Nama, n.IdMateri, m.Kategori, m.NamaMateri, n.Nilai, n.Catatan
                 FROM tbl_nilai n
                 JOIN tbl_santri s ON n.IdSantri = s.IdSantri
                 JOIN tbl_materi_pelajaran m ON n.IdMateri = m.IdMateri
                 WHERE n.IdSantri = '.$IdSantri.'
-                AND n.Semester = '.$IdSemester.'
-                ORDER BY n.IdMateri ASC, n.Semester ASC';
+                AND n.Semester = '.$IdSemester;
+
+        $sql .= ' ORDER BY n.IdMateri ASC, n.Semester ASC';
 
         return db_connect()->query($sql);
     }
+
 
     // Retrieve nilai data per semester
     public function getDataNilaiPerSemester()

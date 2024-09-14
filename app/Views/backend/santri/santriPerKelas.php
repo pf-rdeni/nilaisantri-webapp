@@ -30,7 +30,7 @@
                             <td><?php echo $DataSantri->SantriNama; ?></td>
                             <td><?php echo $DataSantri->JenisKelamin; ?></td>
                             <td>
-                                <a href="<?= base_url('nilai/showDetail/' . $DataSantri->IdSantri . '/' . 1) ?>" class="btn btn-warning btn-sm">
+                                <a href="<?= base_url('nilai/showDetail/' . $DataSantri->IdSantri . '/' . 1 .'/'.true) ?>" class="btn btn-warning btn-sm">
                                     <i class="fas fa-edit"></i>
                                 </a>
                                 <a href="<?= base_url('nilai/showDetail/' . $DataSantri->IdSantri . '/' . 1) ?>" class="btn btn-success btn-sm">
@@ -39,10 +39,10 @@
 
                             </td>
                             <td>
-                                <a href="<?= base_url('nilai/showDetail/' . $DataSantri->IdSantri . '/' . 2) ?>" class="btn btn-warning btn-sm">
+                                <a href="<?= base_url('nilai/showDetail/' . $DataSantri->IdSantri . '/' . 2 .'/'.true) ?>" class="btn btn-warning btn-sm">
                                     <i class="fas fa-edit"></i>
                                 </a>
-                                <a href="<?= base_url('nilai/showDetail/' . $DataSantri->IdSantri . '/' . 1) ?>" class="btn btn-success btn-sm">
+                                <a href="<?= base_url('nilai/showDetail/' . $DataSantri->IdSantri . '/' . 2) ?>" class="btn btn-success btn-sm">
                                     <i class="fas fa-eye"></i>
                                 </a>
 

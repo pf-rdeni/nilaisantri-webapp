@@ -8,8 +8,10 @@
         $dataNilai = $nilai->getResult();
         if (!empty($dataNilai)) {
             $firstResult = $dataNilai[0];
-            $NamaSantri = $firstResult->Nama;
-            $Semester = $firstResult->Semester;
+            $IdSantri = htmlspecialchars($firstResult->IdSantri, ENT_QUOTES, 'UTF-8');
+            $NamaSantri = htmlspecialchars($firstResult->Nama, ENT_QUOTES, 'UTF-8');
+            $Semester = htmlspecialchars($firstResult->Semester, ENT_QUOTES, 'UTF-8');
+            $NamaKelas = htmlspecialchars($firstResult->IdKelas, ENT_QUOTES, 'UTF-8');
             // Format the Tahun with "/"
             $Tahun = $firstResult->IdTahunAjaran;
             if (strlen($Tahun) == 8) {
@@ -19,51 +21,62 @@
             }
         } else {
             // Default values or handle the case when $dataNilai is empty
-            $NamaSantri = 'N/A';
-            $Tahun = 'N/A';
-            $Semester = 'N/A';
+            $NamaSantri = "";
+            $Tahun = "";
+            $Semester = "";
+            $IdSantri ="";
         }
         ?>
 
         <div class="card-header">
             <h3 class="card-title">
-                Data Nilai Santri <strong><?= htmlspecialchars($NamaSantri, ENT_QUOTES, 'UTF-8') ?></strong> Tahun <?= htmlspecialchars($Tahun, ENT_QUOTES, 'UTF-8') ?> Semester <?= htmlspecialchars($Semester, ENT_QUOTES, 'UTF-8') ?>
+                Data Nilai Santri <strong><?= $IdSantri .' - ' .$NamaSantri?></strong> Kelas <?= $NamaKelas?> Tahun <?= $Tahun?> Semester <?= $Semester?>
             </h3>
         </div>       <!-- /.card-header -->
         <div class="card-body">
             <table id="example1" class="table table-bordered table-striped">
                 <thead>
-                    <tr>
-                        <th>Kategori</th>
-                        <th>Nama Materi</th>
-                        <th>Nilai</th>
-                        <th>Catatan</th>
-                        <th>Aksi</th>
-                    </tr>
+                   <?php
+                        $tableHeadersFooter = '
+                            <tr>
+                                <th>Kategori</th>
+                                <th>Nama Materi</th>
+                                <th>Nilai</th>
+                                <th>Catatan</th>';
+                        if ($pageEdit) {
+                            $tableHeadersFooter .= '<th>Aksi</th>';
+                        }
+                        $tableHeadersFooter .= '</tr>';
+                        echo $tableHeadersFooter
+                    ?>
+
                 </thead>
                 <tbody>
                     <?php
                     $MainDataNilai=$nilai->getResult();
-                    foreach ($MainDataNilai as $DataNilai) : ?>
+                    foreach ($MainDataNilai as $DataNilai) : 
+                        if(
+                            $pageEdit && (double)$DataNilai->Nilai <= 0.0 &&  $guruPendamping ||
+                            !$pageEdit &&  $guruPendamping || !$guruPendamping
+                         )
+                        {?>
+
                         <tr>
                             <td><?php echo $DataNilai->Kategori; ?></td>
                             <td><?php echo $DataNilai->NamaMateri; ?></td>
                             <td><?php echo $DataNilai->Nilai; ?></td>
                             <td><?php echo $DataNilai->Catatan; ?></td>
-                            <td>
-                                <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#EditNilai<?= $DataNilai->Id  ?>"><i class="fas fa-edit"></i></button>
-                            </td>
+                            <?php if($pageEdit) {?>
+                                <td>
+                                    <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#EditNilai<?= $DataNilai->Id  ?>"><i class="fas fa-edit"></i></button>
+                                </td>
+                            <?php }?>
                         </tr>
-                    <?php endforeach ?>
+                    <?php }
+                    endforeach ?>
                 </tbody>
                 <tfoot>
-                    <tr>
-                        <th>Kategori</th>
-                        <th>Nama Materi</th>
-                        <th>Nilai</th>
-                        <th>Catatan</th>
-                        <th>Aksi</th>
-                    </tr>
+                    <?= $tableHeadersFooter ?>
                 </tfoot>
             </table>
         </div>
@@ -86,7 +99,7 @@ foreach ($MainDataNilai as $DataNilai) : ?>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="<?= base_url('nilai/update/') ?>" method="POST">
+                    <form action="<?= base_url('nilai/update/'.$pageEdit) ?>" method="POST">
                         <input type="hidden" name="Id" value= <?= $DataNilai->Id ?>>
                         <input type="hidden" name="IdSantri" value= <?= $DataNilai->IdSantri ?>>
                         <input type="hidden" name="Semester" value= <?= $DataNilai->Semester ?>>

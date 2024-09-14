@@ -35,7 +35,7 @@ class Santri extends BaseController
         
         $datasantri = $this->DataSantri->GetDataSantriPerKelas($IdGuru);
         $data = [
-            'page_title' => 'Data Santri',
+            'page_title' => 'Data Santri Per Semester',
             'santri' => $datasantri
         ];
 

@@ -21,7 +21,7 @@
 
         <!-- Sidebar Menu -->
         <nav class="mt-2">
-            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false" >
                 <li class="nav-item">
                     <a href=<?php echo base_url('pages/index') ?> class="nav-link">
                         <i class="nav-icon 	fas fa-tachometer-alt"></i>
@@ -110,7 +110,7 @@
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item" >
+                <li class="nav-item no-hover" >
                     <a href="#" class="nav-link">
                         <i class="nav-icon fas fa-user"></i>
                         <p>
@@ -150,7 +150,7 @@
                         <li class="nav-item">
                             <a href=<?php 
                             
-                            echo base_url('santri/showSantriPerKelas/'.$encryptedIdGuru) ?> class="nav-link">
+                            echo base_url('santri/showSantriPerKelas/'.$encryptedIdGuru) ?> class="nav-link no-hover">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Nilai Per Semester</p>
                             </a>
