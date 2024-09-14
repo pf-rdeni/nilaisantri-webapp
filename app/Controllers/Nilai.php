@@ -6,20 +6,24 @@ use App\Models\NilaiModel;
 class Nilai extends BaseController
 {
     protected $DataNilai;
+    protected $pendamping;
 
     public function __construct()
     {
         $this->DataNilai = new NilaiModel();
+        //untuk perbandingan jika wali kelas dan pendamping berbeda view edit
+        $this->pendamping =false;
     }
 
-    public function showDetail($IdSantri, $IdSemseter)
+    public function showDetail($IdSantri, $IdSemseter, $Edit = false)
     {
-        // Assuming you want to filter based on $IdSantri
         $datanilai = $this->DataNilai->GetDataNilaiDetail($IdSantri, $IdSemseter);
 
         $data = [
             'page_title' => 'Data Nilai',
-            'nilai' => $datanilai
+            'nilai' => $datanilai,
+            'guruPendamping' => $this->pendamping,
+            'pageEdit' => $Edit
         ];
 
         return view('backend/nilai/nilaiSantriDetail', $data);
@@ -43,7 +47,7 @@ class Nilai extends BaseController
         ]);
     }
 
-    public function update()
+    public function update($Edit = false)
     {
         $validationRules = [
             'Nilai' => [
@@ -87,6 +91,8 @@ class Nilai extends BaseController
             </button>
             </div>');
         
-        return redirect()->to('/nilai/showDetail/'.$IdSantri.'/'.$Semester);
+            //Need to adapted
+        return redirect()->to('/nilai/showDetail/'.$IdSantri.'/'.$Semester.'/'.$Edit);
+        
     }
 }
