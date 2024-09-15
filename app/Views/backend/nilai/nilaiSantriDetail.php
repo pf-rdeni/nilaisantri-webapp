@@ -25,6 +25,7 @@
             $Tahun = "";
             $Semester = "";
             $IdSantri ="";
+            $NamaKelas ="";
         }
         ?>
 
