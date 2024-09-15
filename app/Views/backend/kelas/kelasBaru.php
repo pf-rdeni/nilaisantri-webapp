@@ -37,11 +37,10 @@
                                 <select name="IdKelas[<?= $DataSantri['IdSantri']; ?>]" class="form-control select2" id="FormProfilTpq" required>
                                     <option value="" disabled selected>Pilih Kelas</option>
                                     <?php 
-                                    $DataKelas = $kelas->getResult();
-                                    foreach ($DataKelas as $Kelas): ?>
-                                        <option value="<?= $Kelas->IdKelas; ?>" 
-                                            <?= $Kelas->IdKelas == $DataSantri['nextKelas'] ? 'selected' : '' ?>>
-                                            <?= $Kelas->IdKelas; ?>
+                                    foreach ($kelas as $Kelas): ?>
+                                        <option value="<?= $Kelas['IdKelas'] ?>" 
+                                            <?= $Kelas['IdKelas'] == $DataSantri['nextKelas'] ? 'selected' : '' ?>>
+                                            <?= $Kelas['IdKelas'] ?>
                                         </option>
                                     <?php endforeach ?>
                                 </select>

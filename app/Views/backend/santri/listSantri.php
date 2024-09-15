@@ -21,7 +21,6 @@
                         <th>Alamat</th>
                         <th>Rt/Rw</th>
                         <th>Kel/Desa</th>
-                        <th>NKK</th>
                         <th>NIK</th>
                         <th>Status</th>
                         <th>Aksi</th>
@@ -43,7 +42,6 @@
                             <td><?= $DataSantri['Rt'] . " / " . $DataSantri['Rw']; ?></td>
                             <td><?= $DataSantri['KelurahanDesa'] ?></td>
                             <td><?= $DataSantri['Kk'] ?></td>
-                            <td><?= $DataSantri['IdGuru']; ?></td>
                             <td><?= $DataSantri['Status']; ?></td>
                             <td>
                                 <a href="" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
@@ -65,7 +63,6 @@
                         <th>Alamat</th>
                         <th>Rt/Rw</th>
                         <th>Kel/Desa</th>
-                        <th>NKK</th>
                         <th>NIK</th>
                         <th>Status</th>
                         <th>Aksi</th>

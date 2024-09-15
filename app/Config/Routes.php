@@ -70,6 +70,14 @@ $routes->post('kelasMateriPelajaran/update/(:num)', 'KelasMateriPelajaran::updat
 $routes->get('kelasMateriPelajaran/delete/(:num)', 'KelasMateriPelajaran::delete/$1');
 $routes->get('kelasMateriPelajaran/kelasMateriPelajaranModel/(:segment)/(:segment)', 'KelasMateriPelajaran::kelasMateriPelajaranModel/$1/$2');
 
+//Table tbl_guru_kelas
+    $routes->get('GuruKelas/show','GuruKelas::show');
+    $routes->get('GuruKelas/create', 'GuruKelas::create');
+    $routes->post('GuruKelas/store', 'GuruKelasC::store');
+    $routes->get('edit/(:num)', 'GuruKelas::edit/$1');
+    $routes->post('update/(:num)', 'GuruKelasr::update/$1');
+    $routes->post('delete/(:num)', 'GuruKelas::delete/$1');
+
 /*
  * --------------------------------------------------------------------
  * Additional Routing

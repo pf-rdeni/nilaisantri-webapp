@@ -11,6 +11,7 @@ class TpqModel extends Model
     protected $useAutoIncrement = false;
     protected $useTimestamps = true;
     protected $allowedFields = ['IdTpq', 'NamaTpq', 'Alamat', 'TahunBerdiri', 'TempatBelajar', 'KepalaSekolah', 'NoHp'];
+    
     public function GetData($id = false)
     {
         if ($id) {

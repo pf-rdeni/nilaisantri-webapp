@@ -75,7 +75,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href=<?php echo base_url('guru/setWaliSantri') ?> class="nav-link">
+                            <a href=<?php echo base_url('guruKelas/show') ?> class="nav-link">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Wali Kelas</p>
                             </a>

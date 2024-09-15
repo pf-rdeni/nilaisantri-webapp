@@ -14,7 +14,7 @@
                     </button>
                 </div -->
                 <div class="col-lg-2 col-6">
-                    <a href="<?= base_url('tpq/create/') ?>" class="btn btn-primary"><i class="fas fa-edit"></i></a>
+                    <a href="<?= base_url('guruKelas/create/') ?>" class="btn btn-primary"><i class="fas fa-edit"></i></a>
                 </div>
 
                 <div class="col-lg-6 col-6">
@@ -26,47 +26,36 @@
         <div class="card-body">
             <table id="example1" class="table table-bordered table-striped">
                 <thead>
+                    <?php $headerfooter ='
                     <tr>
-                        <th>NIS</th>
-                        <th>Nama</th>
-                        <th>Alamat</th>
-                        <th>Nama Kepala</th>
-                        <th>Tempat Belajar</th>
-                        <th>Tahun Berdiri</th>
-                        <th>No Telpon/Hp</th>
+                        <th>Nama Kelas</th>
+                        <th>Nama Guru</th>
+                        <th>Tahun Ajaran</th>
+                        <th>Posisi</th>
                         <th>Aksi</th>
                     </tr>
+                    ' ?>
                 </thead>
                 <tbody>
-                    <?php
-                    $no = 1;
-                    foreach ($tpq as $dataTpq) : ?>
+                    <?php foreach ($guruKelas as $row) : ?>
                         <tr>
-                            <td><?= $dataTpq['IdTpq'] ?></td>
-                            <td><?= $dataTpq['NamaTpq']  ?></td>
-                            <td><?= $dataTpq['Alamat']  ?></td>
-                            <td><?= $dataTpq['KepalaSekolah']  ?></td>
-                            <td><?= $dataTpq['TempatBelajar']  ?></td>
-                            <td><?= $dataTpq['TahunBerdiri']  ?></td>
-                            <td><?= $dataTpq['NoHp']  ?></td>
+                            <td><?= $row['Id']; ?></td>
+                            <td><?= $row['NamaKelas']; ?></td>
+                            <td><?= $row['NamaGuru']; ?></td>
+                            <td><?= $row['IdTahunAjaran']; ?></td>
+                            <td><?= $row['Posisi']; ?></td>
                             <td>
-                                <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#ProfilTpqModalEdit<?= $dataTpq['IdTpq']  ?>"><i class="fas fa-edit"></i></button>
-                                <a href="<?= base_url('tpq/delete/' . $dataTpq['IdTpq']) ?>" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda Yakin Akan Delet Data Ini')"><i class="fas fa-trash"></i></a>
+                                <button class="btn btn-warning btn-sm" data-toggle="modal" 
+                                data-target="#GuruKelasEdit<?= $row['Id']  ?>"><i class="fas fa-edit"></i></button>
+                                <a href="<?= base_url('guruKelas/delete/' .  $row['Id']) ?>" class="btn btn-danger btn-sm" 
+                                onclick="return confirm('Apakah Anda Yakin Akan Delet Data Ini')"><i class="fas fa-eye"></i>
+                                </a>
                             </td>
                         </tr>
-                    <?php endforeach ?>
+                    <?php endforeach; ?>
                 </tbody>
                 <tfoot>
-                    <tr>
-                        <th>NIS</th>
-                        <th>Nama</th>
-                        <th>Alamat</th>
-                        <th>Nama Kepala</th>
-                        <th>Tempat Belajar</th>
-                        <th>Tahun Berdiri</th>
-                        <th>No Telpon/Hp</th>
-                        <th>Aksi</th>
-                    </tr>
+                   <?= $headerfooter ?>
                 </tfoot>
             </table>
         </div>
@@ -76,53 +65,42 @@
 </div>
 
 <!-- Modal Edit Data-->
-<?php foreach ($tpq as $dataTpq) : ?>
-    <div class="modal fade" id="ProfilTpqModalEdit<?= $dataTpq['IdTpq'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" data-backdrop="static" aria-hidden="true">
+<?php foreach ($guruKelas as $row) : ?>
+    <div class="modal fade" id="GuruKelasEdit<?= $row['Id'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" data-backdrop="static" aria-hidden="true">
         <div class="modal-dialog " role="document">
             <div class="modal-content ">
                 <div class="modal-header bg-warning text-white">
-                    <h5 class="modal-title" id="exampleModalLabel">Edit Data TPQ </h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Data</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="<?= base_url('tpq/update/'. $dataTpq['IdTpq']) ?>" method="POST">
+                    <form action="<?= base_url('guruKelas/update/'. $row['Id']) ?>" method="POST">
                         <div class="form-group">
-                            <label for="FormProfilTpq">NIS TPQ</label>
-                            <input type="number" name="IdTpq" class="form-control" id="FormProfilTpq" maxlength="20" min="1" required placeholder="Ketik Nis TPQ" value=<?= $dataTpq['IdTpq'] ?>>
+                            <label for="FormProfilTpq">Id</label>
+                            <input type="number" name="IdTpq" class="form-control" id="FormProfilTpq" maxlength="20" min="1" required placeholder="Ketik Nis TPQ" value=<?= $row['IdTpq'] ?>>
                         </div>
                         <div class="form-group">
-                            <label for="FormProfilTpq">Nama TPQ</label>
-                            <input type="text" name="NamaTpq" class="form-control" id="FormProfilTpq" placeholder="Ketik Nama TPQ" value="<?= $dataTpq['NamaTpq'] ?>">
+                            <label for="FormProfilTpq">Nama Kelas</label>
+                            <input type="text" name="IdKelas " class="form-control" id="FormProfilTpq" placeholder="Ketik Nama TPQ" value="<?= $row['IdKelas'] ?>">
                         </div>
                         <div class="form-group">
-                            <label for="FormProfilTpq">Alamat</label>
-                            <input type="text" name="AlamatTpq" class="form-control" id="FormProfilTpq" placeholder="Ketik Alamat TPQ" value="<?= $dataTpq['Alamat'] ?>">
+                            <label for="FormProfilTpq">Nama Guru</label>
+                            <input type="text" name="AlamatTpq" class="form-control" id="FormProfilTpq" placeholder="Ketik Alamat TPQ" value="<?= $row['NamaGuru'] ?>">
                         </div>
                         <div class="form-group">
                             <label for="FormProfilTpq">Nama Kep. TPQ</label>
-                            <input type="text" name="NamaKepTpq" class="form-control" id="FormProfilTpq" placeholder="Ketik Nama Kepala TPQ" value="<?= $dataTpq['KepalaSekolah'] ?>">
+                            <input type="text" name="NamaKepTpq" class="form-control" id="FormProfilTpq" placeholder="Ketik Nama Kepala TPQ" value="<?= $row['KepalaSekolah'] ?>">
                         </div>
                         <div class="form-group">
                             <label for="FormProfilTpq">No Hp</label>
-                            <input type="text" name="NoHp" class="form-control" id="FormProfilTpq" placeholder="Ketik No Handphone" value="<?= $dataTpq['NoHp'] ?>">
+                            <input type="text" name="NoHp" class="form-control" id="FormProfilTpq" placeholder="Ketik No Handphone" value="<?= $row['NoHp'] ?>">
                         </div>
                         <div class="form-group">
                             <label for="FormProfilTpq">Tempat Belajar</label>
-                            <input type="text" name="TempatBelajar" class="form-control" id="FormProfilTpq" placeholder="Ketik Tempat Belajar" value="<?= $dataTpq['TempatBelajar'] ?>">
+                            <input type="text" name="TempatBelajar" class="form-control" id="FormProfilTpq" placeholder="Ketik Tempat Belajar" value="<?= $row['TempatBelajar'] ?>">
                         </div>
-                        <div class="form-group">
-                            <label>Tanggal Beridiri:</label>
-                            <div class="input-group date" id="DateForEdit" data-target-input="nearest">
-                                <input type="text" name="TanggalBerdiri" class="form-control datetimepicker-input" data-target="#DateForEdit" placeholder="Tekan Icon Tanggal" value="<?= $dataTpq['TahunBerdiri'] ?>" />
-                                <div class="input-group-append" data-target="#DateForEdit" data-toggle="datetimepicker">
-                                    <div class="input-group-text"><i class="fa fa-calendar-alt"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i>Simpan</button>
                         </div>

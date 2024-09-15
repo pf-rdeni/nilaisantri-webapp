@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\HelpFunctionModel;
 use App\Models\KelasModel;
 use App\Models\SantriModel;
 use App\Models\KelasMateriPelajaranModel;
@@ -13,6 +14,7 @@ class Kelas extends BaseController
     protected $kelasModel;
     protected $kelasMateriPelajaranModel;
     protected $nilaiModel;
+    protected $HelpFunction;
 
     public function __construct()
     {
@@ -21,6 +23,7 @@ class Kelas extends BaseController
         $this->kelasModel = new KelasModel();
         $this->kelasMateriPelajaranModel = new KelasMateriPelajaranModel();
         $this->nilaiModel = new NilaiModel();
+        $this->HelpFunction = new HelpFunctionModel();
     }
 
     // Function to display all records (Read)
@@ -34,7 +37,7 @@ class Kelas extends BaseController
 
     public function showSantriKelasBaru()
     {
-        $dataKelas = $this->kelasModel->getNamaKelas();
+        $dataKelas = $this->HelpFunction->getDataKelas();
         $dataSantri = $this->santriModel->getDataSantriStatus("Baru");
 
         // Add logic to get recommended class
@@ -73,7 +76,7 @@ class Kelas extends BaseController
             $this->store($dataSantriBaru);
         }
 
-        $dataKelas = $this->kelasModel->getNamaKelas();
+        $dataKelas = $this->kelasModel->getDataKelas();
         $dataSantri = $this->santriModel->getDataSantriStatus("Baru1");
 
         $data = [
@@ -189,7 +192,7 @@ class Kelas extends BaseController
                             ->where('Status', 1)
                             ->findAll();
 
-        $newTahunAjaran = $this->calculateNextTahunAjaran($idTahunAjaran);
+        $newTahunAjaran = $this->getTahuanAjaranBerikutnya($idTahunAjaran);
 
         foreach ($santriList as $santri) {
             $idKelasLama = $santri['IdKelas'];
@@ -244,7 +247,7 @@ class Kelas extends BaseController
         return $classMapping[$idKelas] ?? 'Alumni';
     }
 
-    private function calculateNextTahunAjaran($currentTahunAjaran)
+    private function getTahuanAjaranBerikutnya($currentTahunAjaran)
     {
         $startYear = (int) substr($currentTahunAjaran, 0, 4);
         $endYear = (int) substr($currentTahunAjaran, 4);
