@@ -42,7 +42,7 @@
                         <td><?= $dataGuru['Alamat'] ?></td>
                         <td><?= $dataGuru['Rt'] . " / " . $dataGuru['Rw'] ?></td>
                         <td><?= $dataGuru['KelurahanDesa'] ?></td>
-                        <td><?= $dataGuru['Nik'] ?></td>
+                        <td><?= $dataGuru['IdGuru'] ?></td>
                         <td><?= $dataGuru['NoRekBpr'] ?></td>
                         <td><?= $dataGuru['NoRekRiauKepri'] ?></td>
                         <td><?= $dataGuru['Status'] ?></td>

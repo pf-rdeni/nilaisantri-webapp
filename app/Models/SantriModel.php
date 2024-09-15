@@ -45,9 +45,9 @@ class SantriModel extends Model
                 JOIN 
                     tbl_tpq t ON ks.IdTpq = t.IdTpq
                 JOIN 
-                    tbl_wali_kelas w ON w.IdKelas = k.IdKelas AND w.IdTpq = t.IdTpq
+                    tbl_guru_kelas w ON w.IdKelas = k.IdKelas AND w.IdTpq = t.IdTpq
                 JOIN 
-                    tbl_guru g ON w.IdGuru = g.Nik
+                    tbl_guru g ON w.IdGuru = g.IdGuru
                 WHERE 
                     ks.IdTahunAjaran = w.IdTahunAjaran';
         
