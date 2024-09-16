@@ -22,7 +22,7 @@ class SantriModel extends Model
         }
     }
 
-    public function GetDataSantriPerKelas($IdGuru = null)
+    public function GetDataSantriPerKelas($IdTahunAjaran = 0, $IdKelas = 0, $IdGuru = null)
     {
         $db = db_connect();
         
@@ -51,9 +51,14 @@ class SantriModel extends Model
                 WHERE 
                     ks.IdTahunAjaran = w.IdTahunAjaran';
         
-        // Add filter for IdGuru if provided
+        if (!empty($IdTahunAjaran)) {
+            $sql .= ' AND ks.IdTahunAjaran = ' . $db->escape($IdTahunAjaran);
+        }
         if (!empty($IdGuru)) {
-            $sql .= ' AND w.IdGuru = ' . $db->escape($IdGuru); // Secure the query with escape
+            $sql .= ' AND w.IdGuru = ' . $db->escape($IdGuru);
+        }
+        if (!empty($IdKelas)) {
+            $sql .= ' AND k.IdKelas = ' . $db->escape($IdKelas); 
         }
         
         // Add ORDER BY clause
@@ -63,11 +68,5 @@ class SantriModel extends Model
         $query = $db->query($sql);
 
         return $query;
-    }
-
-
-    public function GetDataSantriStatus($Status)
-    {
-        return $this->where(['Status' => $Status])->find();
     }
 }

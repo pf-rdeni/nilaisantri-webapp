@@ -2,17 +2,22 @@
 
 namespace App\Controllers;
 use App\Models\NilaiModel;
+use App\Models\HelpFunctionModel;
 
 class Nilai extends BaseController
 {
     protected $DataNilai;
     protected $pendamping;
+    protected $helpFunction;
 
     public function __construct()
     {
         $this->DataNilai = new NilaiModel();
-        //untuk perbandingan jika wali kelas dan pendamping berbeda view edit
-        $this->pendamping =false;
+        $this->helpFunction = new HelpFunctionModel();
+        
+        $dataGuruKelas = $this->helpFunction->getDataJabatan(session()->get('IdJabatan'));
+
+        $this->pendamping = strpos($dataGuruKelas[0]['NamaJabatan'], 'GURU') !== false;
     }
 
     public function showDetail($IdSantri, $IdSemseter, $Edit = false)

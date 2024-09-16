@@ -21,8 +21,7 @@
                     ?>
                     <?= $headerfooter='
                     <tr>
-                        <th>ID</th>
-                        <th>Nama TPQ</th>
+                        <th>No</th>
                         <th>Nama Kelas</th>
                         <th>Nama Guru</th>
                         <th>Tahun Ajaran</th>
@@ -32,10 +31,10 @@
                     ?>
                 </thead>
                 <tbody>
-                    <?php foreach ($guruKelas as $row) : ?>
+                    <?php $no = 1; 
+                        foreach ($guruKelas as $row) : ?>
                         <tr>
-                            <td><?= $row['Id']; ?></td>
-                            <td><?= $row['NamaTpq']; ?></td>
+                            <td><?= $no++; ?></td>
                             <td><?= $row['NamaKelas']; ?></td>
                             <td><?= $row['Nama']; ?></td>
                             <td><?= $helpModel->convertTahunAjaran($row['IdTahunAjaran']); ?></td>

@@ -7,7 +7,7 @@
         </div>
         <!-- /.card-header -->
         <div class="card-body">
-        <form action="<?= base_url('kelas/setKelasSantri') ?>" method="POST">
+        <form action="<?= base_url('kelas/setKelasSantriBaru') ?>" method="POST">
             <table id="kenaikanKelas" class="table table-bordered table-striped">
                 <?php
                 $tableHeaders = '

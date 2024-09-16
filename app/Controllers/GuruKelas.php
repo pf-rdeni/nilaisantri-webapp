@@ -31,6 +31,7 @@ class GuruKelas extends BaseController
     public function store()
     {
         $id = $this->request->getPost('Id');
+        
         $data = [
             'IdTpq' => $this->request->getPost('IdTpq'),
             'IdKelas' => $this->request->getPost('IdKelas'),
@@ -38,8 +39,10 @@ class GuruKelas extends BaseController
             'IdTahunAjaran' => $this->request->getPost('IdTahunAjaran'),
             'IdJabatan' => $this->request->getPost('IdJabatan'),
         ];
-
-        $id ? $this->guruKelasModel->save($data) : $this->guruKelasModel->insert($data);
+        if ($id) 
+             $data['Id'] = $id;
+        
+        $this->guruKelasModel->save($data);
         
         return redirect()->to('guruKelas/show');
     }

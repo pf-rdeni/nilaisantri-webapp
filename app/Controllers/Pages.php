@@ -6,8 +6,17 @@ class Pages extends BaseController
 {
     public function index()
     {
+        $session = session();
+        $session->set('IdJabatan', '4');
+        $session->set('IdTahunAjaran', '20222023');
+        $session->set('IdKelas', 'SD2');
+        $session->set('IdTpq', '411221010225');
+        $session->set('IdGuru', '2101075810760001'); //2101156110810001 agung 2101075010760002 leni
+
         $data = ['page_title' => 'Dashboard'];
         return view('backend/dashboard/index', $data);
+        // Menginisialisasi session dan menyimpan data
+
     }
 
     public function about()

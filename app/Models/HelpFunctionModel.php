@@ -11,6 +11,18 @@ class HelpFunctionModel extends Model
     {
         parent::__construct();
     }
+    //=================================================================
+    // Select Related to Read tabel
+    public function getDataSantriStatus($Status)
+    {
+        $namaTable = "tbl_santri";
+        $builder = $this->db->table($namaTable);
+
+        if($Status){
+            $builder->where('Status', $Status);
+        }
+        return $builder->get()->getResultArray(); 
+    }
 
     public function getDataTpq($id = false)
     {
@@ -53,7 +65,7 @@ class HelpFunctionModel extends Model
         return $builder->get()->getResultArray();
     }
 
-     public function getDataGuruKelas()
+    public function getDataGuruKelas()
     {
         return $this->db->table('tbl_guru_kelas gk')
                         ->select('j.IdJabatan, j.NamaJabatan, gk.IdTahunAjaran, gk.Id, gk.IdGuru, gk.IdTpq, gk.IdKelas, g.Nama, t.NamaTpq, k.NamaKelas')
@@ -64,6 +76,24 @@ class HelpFunctionModel extends Model
                         ->get()
                         ->getResultArray();
     }
+
+    public function getKelasMateriPelajaran($kelas = null, $IdTpq = null)
+    {
+        $builder = $this->db->table('tbl_kelas_materi_pelajaran');
+        
+        $builder->select('IdKelas, IdMateri, Semester');
+        
+        if ($kelas !== null) {
+            $builder->where('IdKelas', $kelas);
+        }
+        if ($IdTpq !== null) {
+            $builder->where('IdTpq', $IdTpq);
+        }
+
+        return $builder->get()->getResultArray();
+    }
+
+    //===================================================================
 
     public function getNextKelas($idKelas)
     {
@@ -122,8 +152,9 @@ class HelpFunctionModel extends Model
         // Get the current year and determine the academic year
         return ($currentMonth >= 7) ? ($currentYear - 1) . $currentYear : $currentYear . ($currentYear + 1);
     }
-}
 
+    
+}
 class HelpFunctionUpdate extends Model
 {
 

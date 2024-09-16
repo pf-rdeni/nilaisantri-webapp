@@ -28,19 +28,4 @@ class KelasModel extends Model
     // Define the created and updated fields
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
-    
-    public function GetNamaKelas()
-    {
-        $db = db_connect();
-        $sql = 'SELECT IdKelas, NamaKelas from tbl_kelas';
-        $query = $db->query($sql);
-        $query->getResult();
-        return $query;
-    }
-
-    public function getSantriByTahunAjaran($idTahunAjaran)
-    {
-        return $this->where('IdTahunAjaran', $idTahunAjaran)
-                    ->findAll();
-    }
 }

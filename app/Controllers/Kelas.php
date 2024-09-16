@@ -14,7 +14,7 @@ class Kelas extends BaseController
     protected $kelasModel;
     protected $kelasMateriPelajaranModel;
     protected $nilaiModel;
-    protected $HelpFunction;
+    protected $helpFunction;
 
     public function __construct()
     {
@@ -23,7 +23,7 @@ class Kelas extends BaseController
         $this->kelasModel = new KelasModel();
         $this->kelasMateriPelajaranModel = new KelasMateriPelajaranModel();
         $this->nilaiModel = new NilaiModel();
-        $this->HelpFunction = new HelpFunctionModel();
+        $this->helpFunction = new HelpFunctionModel();
     }
 
     // Function to display all records (Read)
@@ -33,59 +33,6 @@ class Kelas extends BaseController
         
         // Load the view and pass the data
         return view('kelas/index', $data);
-    }
-
-    public function showSantriKelasBaru()
-    {
-        $dataKelas = $this->HelpFunction->getDataKelas();
-        $dataSantri = $this->santriModel->getDataSantriStatus("Baru");
-
-        // Add logic to get recommended class
-        foreach ($dataSantri as &$santri) {
-            $santri['nextKelas'] = $this->getNextKelas($santri['Tingkat']);
-        }
-
-        $data = [
-            'page_title' => 'Data Santri',
-            'santri' => $dataSantri,
-            'kelas' => $dataKelas
-        ];
-
-        return view('backend/kelas/kelasBaru', $data);
-    }
-
-
-    public function setKelasSantri()
-    {
-        $currentYear = date('Y');
-        $currentMonth = date('n');
-        // Get the current year and determine the academic year
-        $idTahunAjaran = ($currentMonth >= 7) ? $currentYear . ($currentYear + 1) : ($currentYear - 1) . $currentYear;
-
-        $idKelasArray = $this->request->getVar('IdKelas');
-        $idTpqArray = $this->request->getVar('IdTpq');
-        $dataSantriBaru = [];
-
-        foreach ($idKelasArray as $idSantri => $idKelas) {
-            $dataSantriBaru = [
-                'IdSantri' => $idSantri,
-                'IdKelas' => $idKelas,
-                'IdTpq' => $idTpqArray[$idSantri],
-                'IdTahunAjaran' => $idTahunAjaran
-            ];
-            $this->store($dataSantriBaru);
-        }
-
-        $dataKelas = $this->kelasModel->getDataKelas();
-        $dataSantri = $this->santriModel->getDataSantriStatus("Baru1");
-
-        $data = [
-            'page_title' => 'Data Santri',
-            'santri' => $dataSantri,
-            'kelas' => $dataKelas
-        ];
-
-        return view('backend/kelas/kelasBaru', $data);
     }
 
     // Function to create a new record (Create)
@@ -142,17 +89,88 @@ class Kelas extends BaseController
 
         return redirect()->to('/kelas');  // Redirect to the list of records
     }
+    
+    // =============================================================
+    // Control untuk di tampikan di view
 
+    // Metode untuk mengambil data dan menampilkan di view/backend/kelas/kelasBaru
+    public function showSantriKelasBaru()
+    {
+        // Step 1 Menampilkan data santri baru untuk di crosceck sebelum di masukan ke tabel tbl_kelas_santri
+        $dataKelas = $this->helpFunction->getDataKelas();
+        $dataSantri = $this->helpFunction->getDataSantriStatus("Baru");
+
+        // Step 2 Tampilkan rekomendasi kelas berikutnya berdasarkan kelas yang di daftrkan saat registrasi
+        foreach ($dataSantri as &$santri) {
+            $santri['nextKelas'] = $this->helpFunction->getNextKelas($santri['Tingkat']);
+        }
+
+        $data = [
+            'page_title' => 'Data Santri',
+            'santri' => $dataSantri,
+            'kelas' => $dataKelas
+        ];
+
+        return view('backend/kelas/kelasBaru', $data);
+    }
+
+
+    // Metode untuk menyimpan data daan mengupdate di tabel 
+    // tbl_kelas_santri : menampatkan registrasi di kelas di himpun berdasarkan kelas dan tahun ajaran set aktif
+    // menampilkan kembali di view/backend/kelas/kelasBaru
+    public function setKelasSantriBaru()
+    {
+        // Step 1 definisi set Tahun Ajaran saat ini
+        $currentYear = date('Y');
+        $currentMonth = date('n');
+        $idTahunAjaran = ($currentMonth >= 7) ? $currentYear . ($currentYear + 1) : ($currentYear - 1) . $currentYear;
+
+        // Step 2 ambil data yang dikirim dari proses POST masukan santri baru ke tabel tbl_kelas_santri 
+        // Data ini diambildari data satri yang sudah registarasi tapi belum dimasukan ke kelas
+        $idKelasArray = $this->request->getVar('IdKelas');
+        $idTpqArray = $this->request->getVar('IdTpq');
+        $dataSantriBaru = [];
+
+        // Step 3 ambil individual santri dari POST IdKelas
+        // Simpan di Tabel tbl_kelas_santri
+        foreach ($idKelasArray as $idSantri => $idKelas) {
+            $dataSantriBaru = [
+                'IdSantri' => $idSantri,
+                'IdKelas' => $idKelas,
+                'IdTpq' => $idTpqArray[$idSantri],
+                'IdTahunAjaran' => $idTahunAjaran
+            ];
+            $this->store($dataSantriBaru);
+        }
+
+        //Perlu Memasukdan data ke Tabel tbl_nilai berdasarkan daftar materi ajar
+
+        $dataSantri = $this->helpFunction->getDataSantriStatus("Baru");
+        $dataKelas = $this->helpFunction->getDataKelas();
+
+        $data = [
+            'page_title' => 'Data Santri',
+            'santri' => $dataSantri,
+            'kelas' => $dataKelas
+        ];
+
+        return view('backend/kelas/kelasBaru', $data);
+    }
+
+
+    // Menampilkan list kelas dan jumlah santri berdasarkan kelas dan tahun ajaran
+    // Digunakan untuk melihat data kelas yang mau di naikan ke kelas berikutnya
+    // page : view/backend/kelas/naikKelas
     public function showListSantriPerKelas($idTahunAjaran = null)
     {
         $currentYear = date('Y');
         $currentMonth = date('n');
 
-        // Determine the current and previous academic years
+        // Ambil data berdasarkan tahun ajaran sebelumnya dan data tahun ajaran saat ini
         $previousAcademicYear = ($currentMonth >= 7) ? ($currentYear - 1) . $currentYear : ($currentYear - 2) . ($currentYear - 1);
         $currentAcademicYear = ($currentMonth >= 7) ? $currentYear . ($currentYear + 1) : ($currentYear - 1). ($currentYear + 1);
 
-        // Query for both academic years
+        // mengambil data query berdasarkan filter tahun ajaran tabel tbl_kelas_santri
         $this->kelasModel->select('tbl_kelas_santri.IdTahunAjaran, tbl_kelas_santri.IdKelas, tbl_kelas.NamaKelas, COUNT(tbl_kelas_santri.IdSantri) AS SumIdKelas')
                         ->join('tbl_kelas', 'tbl_kelas_santri.IdKelas = tbl_kelas.IdKelas')
                         ->groupBy('tbl_kelas_santri.IdTahunAjaran, tbl_kelas_santri.IdKelas')
@@ -163,7 +181,7 @@ class Kelas extends BaseController
 
         $dataKelas = $this->kelasModel->get()->getResultArray();
 
-        // Separate data into current and previous academic years
+        // Pisahkan data dari tahun ajaran sebelumnya dan saat ini
         $kelas_previous = array_filter($dataKelas, function($item) use ($previousAcademicYear) {
             return $item['IdTahunAjaran'] === $previousAcademicYear;
         });
@@ -172,7 +190,7 @@ class Kelas extends BaseController
             return $item['IdTahunAjaran'] === $currentAcademicYear;
         });
 
-        // Prepare the data to be sent to the view
+        // persiapkan data untuk di kirim ke 
         $data = [
             'page_title' => 'Daftar Naik Kelas',
             'kelas_previous' => $kelas_previous,
@@ -183,40 +201,50 @@ class Kelas extends BaseController
 
         return view('backend/kelas/naikKelas', $data);
     }
-
-
+    // return direct ke kontrolerll showListSantriPerKelas
+    // page : view/backend/kelas/naikKelas
     public function updateNaikKelas($idTahunAjaran, $idKelas)
     {
+        //Step 1 get tahun berikunya dari idTahun Sebelumnya/saat ini
+        $newTahunAjaran = $this->helpFunction->getTahuanAjaranBerikutnya($idTahunAjaran);
+
+        //Step 2 ambil list santri tbl_kelas_santri
+        //tabel ini informasi penyimmpanan santri berdasarkan tahun ajaran, kelas, tpq dan status active = 1
         $santriList = $this->kelasModel->where('IdTahunAjaran', $idTahunAjaran)
                             ->where('IdKelas', $idKelas)
                             ->where('Status', 1)
                             ->findAll();
 
-        $newTahunAjaran = $this->getTahuanAjaranBerikutnya($idTahunAjaran);
-
+        //Step 3 Aambil santri dari list tersebut untuk di rubah kelas sebelumnya set status = Tidak Aktif = 0
+        //       Kelas Berikutnya set Status = Aktif = 1 
         foreach ($santriList as $santri) {
+            
+            // 3.1 Konversi kelas sebelumnya ke kelas berikutnya
             $idKelasLama = $santri['IdKelas'];
-            $idKelasBaru = $this->getNextKelas($santri['IdKelas']);
+            $idKelasBaru = $this->helpFunction->getNextKelas($idKelasLama);
             $idTpq = $santri['IdTpq'];
             $idSantri = $santri['IdSantri'];
-
+            
+            // 3.2 Insert Ulang Santri kelas sebelumnya untuk di naikan kelas Satatus default aktif = 1
             $this->kelasModel->insert([
                 'IdKelas' => $idKelasBaru,
                 'IdTpq' => $idTpq,
                 'IdSantri' => $idSantri,
                 'IdTahunAjaran' => $newTahunAjaran
             ]);
-
+            // 3.3 Update Santri kelas sebelumnya sudah dinak status tidak aktif = 0
             $this->kelasModel->update($santri['Id'], ['Status' => 0]);
 
-            $listMateriPelajaran = $this->kelasMateriPelajaranModel->getMateriPelajaranByKelasAndTpq($idKelasBaru, $idTpq);
+            // 3.4 Ambil Materi Pelajaran berdasarkan Kelas dan TPQ
+            $listMateriPelajaran = $this->helpFunction->getKelasMateriPelajaran($idKelasBaru, $idTpq);
 
+            // 3.5 Insert Into Tabel tbl_nilai
             foreach ($listMateriPelajaran['materi'] as $materiPelajaran) {
                 $data = [
-                    'IdSantri' => $idSantri,
                     'IdTpq' => $idTpq,
-                    'IdKelas' => $materiPelajaran['IdKelas'],
+                    'IdSantri' => $idSantri,
                     'IdTahunAjaran' => $newTahunAjaran,
+                    'IdKelas' => $materiPelajaran['IdKelas'],
                     'IdMateri' => $materiPelajaran['IdMateri'],
                     'Semester' => $materiPelajaran['Semester']
                 ];
@@ -227,34 +255,62 @@ class Kelas extends BaseController
         return redirect()->to('/kelas/showListSantriPerKelas/' . $idTahunAjaran);
     }
 
-    private function getNextKelas($idKelas)
+    private function saveDataSantriDanMateriDiTabelNilai($StatusSantri, $santriList,  $idTahunAjaran)
     {
-        $classMapping = [
-            'TK1' => 'TK2',
-            'TK2' => 'SD1',
-            'TK' => 'SD1',
-            'SD1' => 'SD2',
-            'SD2' => 'SD3',
-            'SD3' => 'SD4',
-            'SD4' => 'SD5',
-            'SD5' => 'SD6',
-            'SD6' => 'SMP1',
-            'SMP1' => 'SMP2',
-            'SMP2' => 'SMP3',
-            'SMP3' => 'Alumni'
-        ];
+        if($StatusSantri == "Baru") // Santri Baru
+        {
+            //Get Tahun Ajaran Saat Ini
+            $SantriBaru = true;
+        }
+        else{ // Naik Kelas
+            //Get tahun ajaran berikutnya
+            //Step 1 get tahun berikunya dari idTahun Sebelumnya/saat ini
+            $newTahunAjaran = $this->helpFunction->getTahuanAjaranBerikutnya($idTahunAjaran);
 
-        return $classMapping[$idKelas] ?? 'Alumni';
-    }
+            $SantriBaru = false;
 
-    private function getTahuanAjaranBerikutnya($currentTahunAjaran)
-    {
-        $startYear = (int) substr($currentTahunAjaran, 0, 4);
-        $endYear = (int) substr($currentTahunAjaran, 4);
+        }
+        //Step 1 Aambil santri dari list tersebut 
+        //       Kelas Berikutnya set Status = Aktif = 1 
+        foreach ($santriList as $santri) {
+            
+            $idKelas = $santri['IdKelas'];
+            
+            if(!$SantriBaru)
+            {
+                // 1.1 Konversi kelas sebelumnya ke kelas berikutnya
+                $idKelas = $this->helpFunction->getNextKelas($idKelas);
+            }
 
-        $nextStartYear = $startYear + 1;
-        $nextEndYear = $endYear + 1;
+            $idTpq = $santri['IdTpq'];
+            $idSantri = $santri['IdSantri'];
+            
+            // 1.2 Insert Ulang Santri kelas sebelumnya untuk di naikan kelas Satatus default aktif = 1
+            $this->kelasModel->insert([
+                'IdKelas' => $idKelas,
+                'IdTpq' => $idTpq,
+                'IdSantri' => $idSantri,
+                'IdTahunAjaran' => $newTahunAjaran
+            ]);
+            // 1.3 Update Santri kelas sebelumnya sudah dinak status tidak aktif = 0
+            $this->kelasModel->update($santri['Id'], ['Status' => 0]);
 
-        return $nextStartYear . $nextEndYear;
+            // 1.4 Ambil Materi Pelajaran berdasarkan Kelas dan TPQ
+            $listMateriPelajaran = $this->helpFunction->getKelasMateriPelajaran($idKelas, $idTpq);
+
+            // 1.5 Insert Into Tabel tbl_nilai
+            foreach ($listMateriPelajaran['materi'] as $materiPelajaran) {
+                $data = [
+                    'IdTpq' => $idTpq,
+                    'IdSantri' => $idSantri,
+                    'IdTahunAjaran' => $newTahunAjaran,
+                    'IdKelas' => $materiPelajaran['IdKelas'],
+                    'IdMateri' => $materiPelajaran['IdMateri'],
+                    'Semester' => $materiPelajaran['Semester']
+                ];
+                $this->nilaiModel->insertNilai($data);
+            }
+        }
+
     }
 }

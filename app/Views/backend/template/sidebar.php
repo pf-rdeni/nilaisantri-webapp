@@ -126,7 +126,7 @@
                     </a>
                     <ul class="nav nav-treeview" style="display: none;">
                         <?php 
-                            $IdGuru='2101075810760001';
+                            $IdGuru = session()->get('IdGuru');
                             $encrypter = \Config\Services::encrypter();
                             $encryptedIdGuru = bin2hex($encrypter->encrypt($IdGuru));;?>
                         <li class="nav-item">

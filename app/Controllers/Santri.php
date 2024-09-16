@@ -33,7 +33,9 @@ class Santri extends BaseController
         else 
             $IdGuru = $encryptedIdGuru;
         
-        $datasantri = $this->DataSantri->GetDataSantriPerKelas($IdGuru);
+        $IdKelas = session()->get('IdKelas');
+        $IdTahunAjaran = session()->get('IdTahunAjaran');
+        $datasantri = $this->DataSantri->GetDataSantriPerKelas($IdTahunAjaran, $IdKelas, $IdGuru);
         $data = [
             'page_title' => 'Data Santri Per Semester',
             'santri' => $datasantri
