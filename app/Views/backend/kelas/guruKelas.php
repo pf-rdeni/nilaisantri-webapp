@@ -72,7 +72,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="<?= base_url('guruKelas/store/') ?>" method="POST">
+                    <form action="<?= base_url('guruKelas/store') ?>" method="POST">
                         <div class="form-group">
                             <input type="hidden" name="Id" id="FormGuruKelas" value="<?= $row['Id'] ?>">
                             <input type="hidden" name="IdTpq" id="FormGuruKelas" value="<?= $row['IdTpq'] ?>">
@@ -134,7 +134,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="<?= base_url('guruKelas/store/')?>" method="POST">
+                <form action="<?= base_url('guruKelas/store')?>" method="POST">
                     <div class="form-group">
                         <input type="hidden" name="IdTpq" id="FormGuruKelas" value="<?= $dataTpq?>">
                     </div>
