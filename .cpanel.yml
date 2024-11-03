@@ -1,14 +1,14 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/u1525344/daftarsantribaru/app
+    - export DEPLOYPATH=/home/u1525344/nilaisantri/app
     - echo "Starting deployment..." > /home/u1525344/log.txt
     - echo "Copying Models..." >> /home/u1525344/log.txt
-    - /bin/cp -r /home/u1525344/repositories/DaftarSantriBaru/app/Models $DEPLOYPATH
+    - /bin/cp -r /home/u1525344/repositories/nilaisantri-webapp/app/Models $DEPLOYPATH
     - echo "Copying Views..." >> /home/u1525344/log.txt
-    - /bin/cp -r /home/u1525344/repositories/DaftarSantriBaru/app/Views $DEPLOYPATH
+    - /bin/cp -r /home/u1525344/repositories/nilaisantri-webapp/app/Views $DEPLOYPATH
     - echo "Copying Controllers..." >> /home/u1525344/log.txt
-    - /bin/cp -r /home/u1525344/repositories/DaftarSantriBaru/app/Controllers $DEPLOYPATH
+    - /bin/cp -r /home/u1525344/repositories/nilaisantri-webapp/app/Controllers $DEPLOYPATH
     - echo "Copying Router.php..." >> /home/u1525344/log.txt
-    - /bin/cp /home/u1525344/repositories/DaftarSantriBaru/app/Config/Routes.php $DEPLOYPATH/Config/
+    - /bin/cp /home/u1525344/repositories/nilaisantri-webapp/app/Config/Routes.php $DEPLOYPATH/Config/
     - echo "Deployment complete!" >> /home/u1525344/log.txt
